@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gerador de Notas de Serviço em PDF">
+    <title>Gerar Nota de Serviço</title>   
+    <link rel="stylesheet" href="../styles/nota.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <link rel="icon" href="../src/img/2302974.ico">
+</head>
+<body>
+    <div class="container">
+        <!-- Header da empresa -->
+        <div class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo">
+                        <img src="../src/img/Digital_cinza.jpg" alt="Logo Digital Drift" class="logo-img">
+                    </div>
+                    <div class="company-info">
+                        <h1>Nota de Serviço</h1>
+                        <p>Assistência Técnica Especializada</p>
+                    </div>
+                </div>
+                <div class="header-stats">
+                    <div class="stat">
+                        <span class="stat-number" id="current-date"></span>
+                        <span class="stat-label" id="data">Data</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulário principal -->
+        <div class="form-container">
+            <!-- Seção Dados do Cliente -->
+            <div class="section-title">
+                <i class="fas fa-user"></i>
+                Dados do Cliente
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <input type="text" id="nome" placeholder="Nome do Cliente">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="sobrenome" placeholder="Sobrenome do Cliente">
+                </div>
+                <div class="form-group full-width">
+                    <input type="text" id="telefone" placeholder="Telefone do Cliente">
+                </div>
+            </div>
+
+            <!-- Seção Detalhes do Serviço -->
+            <div class="section-title">
+                <i class="fas fa-tools"></i>
+                Detalhes do Serviço
+            </div>
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <textarea id="entrada" class="form-textarea" placeholder="Descrição do Problema"></textarea>
+                </div>
+                <div class="form-group full-width">
+                    <textarea id="condicao" class="form-textarea" placeholder="Condições do Aparelho na Entrada"></textarea>
+                </div>
+                <div class="form-group full-width">
+                    <textarea id="servico" class="form-textarea" placeholder="Serviço Realizado"></textarea>
+                </div>
+            </div>
+
+            <!-- Seção Itens Gastos -->
+            <div class="section-title">
+                <i class="fas fa-list"></i>
+                Itens Gastos
+            </div>
+            <table class="items-table" id="produtos-gastos">
+                <thead>
+                    <tr>
+                        <th>Itens</th>
+                        <th>Quantidade</th>
+                        <th>Valor Unitário (R$)</th>
+                        <th>Total (R$)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="produto" placeholder="Nome do Item"></td>
+                        <td><input type="number" class="quantidade" placeholder="Qtd." oninput="calcularTotalProdutos()"></td>
+                        <td><input type="number" class="valor" placeholder="Valor" oninput="calcularTotalProdutos()"></td>
+                        <td><input type="text" class="total-produto" readonly></td>
+                        <td><button type="button" class="btn-remove" onclick="removerProduto(this)"><i class="fas fa-trash" aria-hidden="true"></i></button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-add" type="button" onclick="adicionarProduto()">
+                <i class="fas fa-plus"></i> Adicionar Item
+            </button>
+
+            <!-- Seção Valores -->
+            <div class="section-title">
+                <i class="fas fa-calculator"></i>
+                Valores
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <input type="text" id="subtotal" placeholder="Subtotal (R$)" oninput="calcularTotal()">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="descontos" placeholder="Descontos (R$)" oninput="calcularTotal()">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="outros" placeholder="Outros Serviços (R$)" oninput="calcularTotal()">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="total" placeholder="Total (R$)" readonly>
+                </div>
+            </div>
+
+            <!-- Seção Pagamento -->
+            <div class="section-title">
+                <i class="fas fa-credit-card"></i>
+                Forma de Pagamento
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <select id="forma-pagamento" onchange="calcularTotal()">
+                        <option value="Dinheiro/Pix">Dinheiro/Pix</option>
+                        <option value="Cartão">Cartão</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select id="parcelamento" onchange="calcularTotal()">
+                        <option value="1">À vista</option>
+                        <option value="2">2x sem juros</option>
+                        <option value="3">3x sem juros</option>
+                        <option value="4">4x sem juros</option>
+                    </select>
+                </div>
+                <div class="form-group full-width">
+                    <span id="taxa-maquina">Cartão: 6,77% | Dinheiro/Pix: 0,00%</span>
+                </div>
+            </div>
+            
+            <p id="parcelas"></p>
+            <div id="duplicatas"></div>
+        </div>
+
+        <!-- container do PIX (sem botão) -->
+        <div id="dv_ct" class="dv_ct">
+            <div class="dv_ct_2">    
+                    <div class="dv_comprar">
+                        <input id="in_key" type="text" style="display: none;" value="a03b54c4-3eac-4c28-976c-c006d11f580f" readonly></input>
+                        <input id="in_value" type="number" style="display: none" value="0" readonly></input>
+                        <img id="im_qrcode" src=""/>
+                    </div>
+    
+                <div class="ct_qrcode" id="ct_qrcode">
+                    <div class="dv_copiacola" onclick="copyClipboard()">
+                        <span class="tx_5">PIX copia e cola:&nbsp;</span>
+                        <img id="im_copia" src="" class="im_moeda"/>
+                    </div>
+                    <span class="tx_4" id="tx_val_qrcode">qrcodetext</span>
+                    
+                    <span class="tx_5">PIX QR Code:</span>
+                    <canvas id="qrcode" class="cv"></canvas>
+                </div>
+            </div>
+        </div>
+
+<!-- botão único PDF -->
+<button class="btn-primary" onclick="gerarComPixEPDF()">
+    <i class="fas fa-file-pdf"></i> Gerar PDF
+</button>
+
+<script> function gerarComPixEPDF() {
+    // chama a função do PIX pra gerar o QR Code 
+    showQrCode();
+
+    // espera 2s e gera o PDF 
+    setTimeout(() => { 
+        gerarPDF(); 
+    }, 2000);
+}
+
+</script>
+
+
+
+
+        <!-- Polígonos decorativos -->
+        <div class="polygon-decoration polygon-1"></div>
+        <div class="polygon-decoration polygon-2"></div>
+    </div>
+    
+    <script src="../src/controller/pix.js"></script>
+    <script src="../src/controller/nota.js"></script>
+</body>
+</html>

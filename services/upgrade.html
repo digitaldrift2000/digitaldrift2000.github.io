@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Digital Drift transforma suas ideias em soluções digitais criativas. Conheça nossos serviços de desenvolvimento e design.">
+    <title>Digital Drift - Upgrade</title>
+    <link rel="stylesheet" href="../public/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <h3 class="logo">Digital Drift</h3>
+        <nav>
+            <ul id="nav-list"></ul>
+        </nav>
+    </header>
+
+    <section id="upgrade" class="form-upgrade">
+        <h2 class="isso" style="font-size: 2.0em;"><b>Upgrade de Computador</b></h2>
+        <div class="botoes-upgrade">
+            <button type="button" data-upgrade="Processador">Processador</button>
+            <button type="button" data-upgrade="Placa-Mãe">Placa-Mãe</button>
+            <button type="button" data-upgrade="Memória RAM">Memória RAM</button>
+            <button type="button" data-upgrade="Placa de Vídeo">Placa de Vídeo</button>
+            <button type="button" data-upgrade="SSD">SSD</button>
+            <button type="button" data-upgrade="Gabinete">Gabinete</button>
+            <button type="button" data-upgrade="Cooler">Cooler</button>
+            <button type="button" data-upgrade="Fonte">Fonte</button>
+            <button type="button" data-upgrade="HD">HD</button>
+        </div>
+        <p><b>Caso nao encontre o que deseja, informe no campo "Outros"</b></p>
+        <div class="upgrade-container">
+            <label for="serv-Outro">Outro(s):</label>
+            <input type="text" id="serv-Outro" name="serv-Outro" placeholder="Digite outro(s) upgrade(s)">
+        
+            <label for="nome-cliente">Nome:</label>
+            <input type="text" id="nome-cliente" name="nome-cliente" placeholder="Digite seu nome" required>
+
+            <label for="sobrenome-cliente">Sobrenome</label>
+            <input type="text" id="sobrenome-cliente" name="sobrenome-cliente" placeholder="Digite seu sobrenome" required>
+
+            <label for="telefone">Telefone/WhatsApp:</label>
+            <input type="tel" id="telefone" name="telefone" placeholder="( ) _____-____" required>
+            
+        </div>        
+        <button id="enviar-upgrade" type="submit" >Enviar</button>
+    </section>
+
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
+    <script src="../src/routes/routes.js"></script>
+    <script src="../src/controller/app.js"></script>
+    <script src="../src/controller/upgrade-controller.js"></script>
+</body>
+
+</html>

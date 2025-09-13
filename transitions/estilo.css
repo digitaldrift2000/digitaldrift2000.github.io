@@ -1,0 +1,79 @@
+/* Corpo da página */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(45deg, #a2c2e3, #b8d8d6);
+    color: #333;
+    display: flex;
+    flex-direction: column; /* Permite que o conteúdo fique empilhado */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+    padding: 10px;
+}
+
+/* Container de login */
+.login-container {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 380px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+/* Inputs */
+input {
+    width: calc(100% - 20px); /* Garante que respeite o padding */
+    max-width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    outline: none;
+    transition: border 0.3s ease;
+    display: block;
+    box-sizing: border-box;
+}
+
+/* Botão */
+button {
+    width: calc(100% - 20px);
+    max-width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background-color: #58a6e3;
+    border: 2px solid #58a6e3;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    box-sizing: border-box;
+}
+
+/* Responsividade para telas pequenas */
+@media (max-width: 480px) {
+    .login-container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 1.6rem;
+    }
+
+    input,
+    button {
+        font-size: 1rem;
+        padding: 10px;
+        width: 100%; /* Garante que fique ajustado à tela */
+    }
+}

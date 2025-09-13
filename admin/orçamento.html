@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de Orçamento Digital Drift - Manutenção de PCs">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="robots" content="noindex">
+    <title>Digital Drift - Sistema de Orçamento</title>
+    
+    <!-- Fonts com display swap para performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    
+    <!-- Seus arquivos CSS -->
+    <link rel="stylesheet" href="../styles/orçamento.css">
+    
+    <!-- Bibliotecas PDF com lazy loading -->
+    <script>
+        // Lazy load das bibliotecas PDF apenas quando necessário
+        function carregarBibliotecasPDF() {
+            return new Promise((resolve, reject) => {
+                if (window.jsPDF) {
+                    resolve();
+                    return;
+                }
+                
+                const script1 = document.createElement('script');
+                script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+                script1.onerror = () => {
+                    // Fallback para versão local se CDN falhar
+                    const fallback = document.createElement('script');
+                    fallback.src = '../libs/jspdf.min.js';
+                    fallback.onload = () => loadAutoTable();
+                    fallback.onerror = reject;
+                    document.head.appendChild(fallback);
+                };
+                script1.onload = () => {
+                    const script2 = document.createElement('script');
+                    script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js';
+                    script2.onerror = () => {
+                        // Fallback para versão local se CDN falhar
+                        const fallback = document.createElement('script');
+                        fallback.src = '../libs/jspdf-autotable.min.js';
+                        fallback.onload = resolve;
+                        fallback.onerror = reject;
+                        document.head.appendChild(fallback);
+                    };
+                    script2.onload = resolve;
+                    document.head.appendChild(script2);
+                };
+                document.head.appendChild(script1);
+            });
+        }
+    </script>
+</head>
+<body>
+    <!-- Decorações poligonais -->
+    <div class="polygon-decoration polygon-1"></div>
+    <div class="polygon-decoration polygon-2"></div>
+
+    <main class="container">
+        <!-- Header da empresa -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo">
+                        <img src="../src/img/Digital_cinza.jpg" alt="Logo Digital Drift" class="logo-img">
+                    </div>
+                    <div class="company-info">
+                        <h1>Digital Drift</h1>
+                        <p>Assistência Técnica Especializada</p>
+                    </div>
+                </div>
+                <div class="header-stats">
+                    <div class="stat">
+                        <span class="stat-number" id="current-date"></span>
+                        <span class="stat-label" id="data">Data</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dados do Cliente -->
+        <section class="form-container">
+            <div class="section-title">
+                <i class="fas fa-user" aria-hidden="true"></i>
+                Dados do Cliente
+            </div>
+            <form class="orcamento-form" novalidate>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="nome" class="sr-only">Nome completo do cliente</label>
+                        <input type="text" id="nome" class="form-input" placeholder="Nome completo do cliente" aria-describedby="nome-help">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefone" class="sr-only">Telefone para contato</label>
+                        <input type="tel" id="telefone" class="form-input" placeholder="Telefone para contato" aria-describedby="telefone-help">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="descricao" class="sr-only">Descrição do problema ou serviço</label>
+                        <textarea id="descricao" class="form-textarea" placeholder="Descrição detalhada do problema ou serviço solicitado..." aria-describedby="descricao-help"></textarea>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <!-- Opção 1 - Básica -->
+        <section class="option-section" id="option-1">
+            <div class="option-header">
+                <div class="option-title">
+                    <span class="option-badge basica">BÁSICA</span>
+                    <span class="option-name">Opção 1 - Solução Básica</span>
+                </div>
+                <label class="option-checkbox">
+                    <input type="checkbox" id="checkbox-1" onchange="selecionarOpcao(1)" aria-describedby="opcao-1-descricao">
+                    <span>Selecionar esta opção</span>
+                </label>
+            </div>
+
+            <table class="items-table" id="itens-orcamento-1">
+                <caption class="sr-only">Itens e serviços da opção básica</caption>
+                <thead>
+                    <tr>
+                        <th scope="col"><i class="fas fa-tools" aria-hidden="true"></i> Item/Serviço</th>
+                        <th scope="col"><i class="fas fa-hashtag" aria-hidden="true"></i> Qtd</th>
+                        <th scope="col"><i class="fas fa-dollar-sign" aria-hidden="true"></i> Valor Unit.</th>
+                        <th scope="col"><i class="fas fa-calculator" aria-hidden="true"></i> Total</th>
+                        <th scope="col"><i class="fas fa-cog" aria-hidden="true"></i> Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="item" placeholder="Ex: Limpeza do PC" aria-label="Descrição do item ou serviço"></td>
+                        <td><input type="number" class="quantidade" placeholder="1" min="0" step="0.01" oninput="calcularTotal(1)" aria-label="Quantidade"></td>
+                        <td><input type="number" class="valor" placeholder="50.00" min="0" step="0.01" oninput="calcularTotal(1)" aria-label="Valor unitário"></td>
+                        <td><input type="text" class="total-item" readonly aria-label="Total do item"></td>
+                        <td>
+                            <button type="button" class="btn btn-remove" onclick="removerItem(this, 1)" aria-label="Remover este item">
+                                <i class="fas fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-add" type="button" onclick="adicionarItem(1)" aria-label="Adicionar novo item à opção básica">
+                <i class="fas fa-plus" aria-hidden="true"></i> Adicionar Item
+            </button>
+
+            <div class="financial-summary">
+                <div class="summary-item">
+                    <span>Subtotal:</span>
+                    <input type="text" id="subtotal-1" placeholder="R$ 0,00" readonly aria-label="Subtotal da opção básica">
+                </div>
+                <div class="summary-item">
+                    <span>Desconto:</span>
+                    <input type="text" id="desconto-1" placeholder="R$ 0,00" oninput="calcularTotal(1)" aria-label="Desconto da opção básica">
+                </div>
+                <div class="summary-item total">
+                    <span><strong>Total da Opção:</strong></span>
+                    <input type="text" id="total-1" placeholder="R$ 0,00" readonly aria-label="Total final da opção básica">
+                </div>
+            </div>
+        </section>
+
+        <!-- Opção 2 - Intermediária -->
+        <section class="option-section" id="option-2">
+            <div class="option-header">
+                <div class="option-title">
+                    <span class="option-badge intermediaria">INTERMEDIÁRIA</span>
+                    <span class="option-name">Opção 2 - Solução Intermediária</span>
+                </div>
+                <label class="option-checkbox">
+                    <input type="checkbox" id="checkbox-2" onchange="selecionarOpcao(2)" aria-describedby="opcao-2-descricao">
+                    <span>Selecionar esta opção</span>
+                </label>
+            </div>
+
+            <table class="items-table" id="itens-orcamento-2">
+                <caption class="sr-only">Itens e serviços da opção intermediária</caption>
+                <thead>
+                    <tr>
+                        <th scope="col"><i class="fas fa-tools" aria-hidden="true"></i> Item/Serviço</th>
+                        <th scope="col"><i class="fas fa-hashtag" aria-hidden="true"></i> Qtd</th>
+                        <th scope="col"><i class="fas fa-dollar-sign" aria-hidden="true"></i> Valor Unit.</th>
+                        <th scope="col"><i class="fas fa-calculator" aria-hidden="true"></i> Total</th>
+                        <th scope="col"><i class="fas fa-cog" aria-hidden="true"></i> Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="item" placeholder="Ex: Formatação + Limpeza" aria-label="Descrição do item ou serviço"></td>
+                        <td><input type="number" class="quantidade" placeholder="1" min="0" step="0.01" oninput="calcularTotal(2)" aria-label="Quantidade"></td>
+                        <td><input type="number" class="valor" placeholder="120.00" min="0" step="0.01" oninput="calcularTotal(2)" aria-label="Valor unitário"></td>
+                        <td><input type="text" class="total-item" readonly aria-label="Total do item"></td>
+                        <td>
+                            <button type="button" class="btn btn-remove" onclick="removerItem(this, 2)" aria-label="Remover este item">
+                                <i class="fas fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-add" type="button" onclick="adicionarItem(2)" aria-label="Adicionar novo item à opção intermediária">
+                <i class="fas fa-plus" aria-hidden="true"></i> Adicionar Item
+            </button>
+
+            <div class="financial-summary">
+                <div class="summary-item">
+                    <span>Subtotal:</span>
+                    <input type="text" id="subtotal-2" placeholder="R$ 0,00" readonly aria-label="Subtotal da opção intermediária">
+                </div>
+                <div class="summary-item">
+                    <span>Desconto:</span>
+                    <input type="text" id="desconto-2" placeholder="R$ 0,00" oninput="calcularTotal(2)" aria-label="Desconto da opção intermediária">
+                </div>
+                <div class="summary-item total">
+                    <span><strong>Total da Opção:</strong></span>
+                    <input type="text" id="total-2" placeholder="R$ 0,00" readonly aria-label="Total final da opção intermediária">
+                </div>
+            </div>
+        </section>
+
+        <!-- Opção 3 - Premium -->
+        <section class="option-section" id="option-3">
+            <div class="option-header">
+                <div class="option-title">
+                    <span class="option-badge premium">PREMIUM</span>
+                    <span class="option-name">Opção 3 - Solução Premium</span>
+                </div>
+                <label class="option-checkbox">
+                    <input type="checkbox" id="checkbox-3" onchange="selecionarOpcao(3)" aria-describedby="opcao-3-descricao">
+                    <span>Selecionar esta opção</span>
+                </label>
+            </div>
+
+            <table class="items-table" id="itens-orcamento-3">
+                <caption class="sr-only">Itens e serviços da opção premium</caption>
+                <thead>
+                    <tr>
+                        <th scope="col"><i class="fas fa-tools" aria-hidden="true"></i> Item/Serviço</th>
+                        <th scope="col"><i class="fas fa-hashtag" aria-hidden="true"></i> Qtd</th>
+                        <th scope="col"><i class="fas fa-dollar-sign" aria-hidden="true"></i> Valor Unit.</th>
+                        <th scope="col"><i class="fas fa-calculator" aria-hidden="true"></i> Total</th>
+                        <th scope="col"><i class="fas fa-cog" aria-hidden="true"></i> Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="item" placeholder="Ex: Upgrade Completo + Garantia" aria-label="Descrição do item ou serviço"></td>
+                        <td><input type="number" class="quantidade" placeholder="1" min="0" step="0.01" oninput="calcularTotal(3)" aria-label="Quantidade"></td>
+                        <td><input type="number" class="valor" placeholder="300.00" min="0" step="0.01" oninput="calcularTotal(3)" aria-label="Valor unitário"></td>
+                        <td><input type="text" class="total-item" readonly aria-label="Total do item"></td>
+                        <td>
+                            <button type="button" class="btn btn-remove" onclick="removerItem(this, 3)" aria-label="Remover este item">
+                                <i class="fas fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-add" type="button" onclick="adicionarItem(3)" aria-label="Adicionar novo item à opção premium">
+                <i class="fas fa-plus" aria-hidden="true"></i> Adicionar Item
+            </button>
+
+            <div class="financial-summary">
+                <div class="summary-item">
+                    <span>Subtotal:</span>
+                    <input type="text" id="subtotal-3" placeholder="R$ 0,00" readonly aria-label="Subtotal da opção premium">
+                </div>
+                <div class="summary-item">
+                    <span>Desconto:</span>
+                    <input type="text" id="desconto-3" placeholder="R$ 0,00" oninput="calcularTotal(3)" aria-label="Desconto da opção premium">
+                </div>
+                <div class="summary-item total">
+                    <span><strong>Total da Opção:</strong></span>
+                    <input type="text" id="total-3" placeholder="R$ 0,00" readonly aria-label="Total final da opção premium">
+                </div>
+            </div>
+        </section>
+
+        <!-- Opções Selecionadas -->
+        <section class="selected-options" id="selected-options-section">
+            <div class="section-title">
+                <i class="fas fa-check-circle" aria-hidden="true"></i>
+                Resumo das Opções Selecionadas
+            </div>
+            <div id="lista-opcoes-selecionadas" role="region" aria-live="polite"></div>
+        </section>
+
+        <!-- Configurações Finais -->
+        <section class="actions-section">
+            <div class="section-title">
+                <i class="fas fa-cog" aria-hidden="true"></i>
+                Configurações Finais
+            </div>
+            
+            <div class="actions-grid">
+                <div class="form-group">
+                    <label for="total-geral" class="sr-only">Total geral do orçamento</label>
+                    <input type="text" id="total-geral" class="form-input" placeholder="Total Geral - R$ 0,00" readonly aria-label="Total geral do orçamento">
+                </div>
+                <div class="form-group">
+                    <label for="validade" class="sr-only">Validade do orçamento em dias</label>
+                    <input type="number" id="validade" class="form-input" placeholder="Validade em dias" value="30" min="1" max="365" aria-label="Validade do orçamento em dias">
+                </div>
+            </div>
+
+            <div class="final-buttons">
+                <button class="btn btn-primary" onclick="gerarPDF()" aria-label="Gerar orçamento em PDF">
+                    <i class="fas fa-file-pdf" aria-hidden="true"></i>
+                    Gerar Orçamento PDF
+                </button>
+                <button class="btn btn-secondary" onclick="limparFormulario()" aria-label="Limpar todos os dados do formulário">
+                    <i class="fas fa-refresh" aria-hidden="true"></i>
+                    Limpar Formulário
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast" style="display: none;" role="alert" aria-live="assertive">
+        <div class="toast-content">
+            <i class="toast-icon" aria-hidden="true"></i>
+            <span class="toast-message"></span>
+        </div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="loading-text">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+            <p id="loading-text">Gerando PDF...</p>
+        </div>
+    </div>
+
+    <!-- Auto-save indicator -->
+    <div id="auto-save-indicator" class="auto-save-indicator" aria-live="polite">
+        <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+        Dados salvos automaticamente
+    </div>
+
+    <!-- Script para atualizar data -->
+    <script>
+        function atualizarData() {
+            const hoje = new Date();
+            const dia = String(hoje.getDate()).padStart(2, '0');
+            const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+            const ano = hoje.getFullYear();
+            document.getElementById('current-date').textContent = `${dia}/${mes}/${ano}`;
+        }
+
+        // Atualiza a data quando a página carrega
+        document.addEventListener('DOMContentLoaded', atualizarData);
+    </script>
+
+    <script src="../src/controller/orçamento.js"></script>
+</body>
+</html>
