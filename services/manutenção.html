@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Digital Drift oferece serviços de manutenção para computadores e dispositivos digitais. Confie em nossos especialistas!">
-    <title>Digital Drift - Manutenção</title>
+        content="Digital Drift oferece serviços de manutenção para computadores e dispositivos digitais. Descreva seu problema e encontre soluções rápidas!">
+    <title>Digital Drift - Manutenção de Computador</title>
     <link rel="stylesheet" href="../public/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/manutencao.css">
 </head>
 
 <body>
@@ -21,45 +21,234 @@
         </nav>
     </header>
 
-    <section id="upgrade" class="form-upgrade">
-        <h2 class="isso" style="font-size: 2.0em;"><b>Manutenção de computador</b></h2>
-        <h3 class="isso">Escolha uma opção abaixo do que deseja</h3>
-        <div class="botoes-upgrade">
-            <!-- Manutenção Física e Limpeza -->
-            <button type="button" data-upgrade="Formatação">Formatação</button>
-            <button type="button" data-upgrade="Limpeza Interna">Limpeza Interna</button>
-            <button type="button" data-upgrade="Limpeza Preventiva">Limpeza Preventiva</button>
-            <button type="button" data-upgrade="Troca de Pasta Térmica">Troca de Pasta Térmica</button>
-            <button type="button" data-upgrade="Limpeza completa de cooler e ventoinhas">Limpeza completa</button>
-            <!-- <button type="button" data-upgrade="Troca de filtro de poeira">Troca de Filtro de Poeira</button> -->
-            <button type="button" data-upgrade="Organização de cabos internos">Organização de Cabos Internos</button>
+    <main>
+        <section class="form-upgrade" role="main" aria-labelledby="main-title">
+            <div class="section-header">
+                <h1 id="main-title">Suporte Técnico de Computador</h1>
+                <p>Conte-nos sobre o problema do seu computador e nossos especialistas encontrarão a melhor solução para você.</p>
+            </div>
 
-            <!-- Manutenção e Otimização de Software -->
-            <button type="button" data-upgrade="Instalação de drivers">Instalação de Drivers</button>
-           <!-- <button type="button" data-upgrade="Remoção de vírus e malwares">Remoção de Vírus e Malwares</button> -->
-            <button type="button" data-upgrade="Instalação de programas básicos">Instalação de Programas Básicos</button>
-            <!-- <button type="button" data-upgrade="Configuração de inicialização rápida">Configuração de Inicialização Rápida</button> -->
-            <button type="button" data-upgrade="Desbloqueio">Desbloqueio</button>
+            <form id="maintenance-form" novalidate>
+                <!-- Seção de Descrição do Problema -->
+                <div class="problem-section">
+                    <h2>
+                        <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                        Descreva o Problema
+                    </h2>
+                    <label for="problema-descricao" class="sr-only">Descrição detalhada do problema</label>
+                    <textarea 
+                        id="problema-descricao" 
+                        name="problema-descricao"
+                        class="problem-textarea"
+                        placeholder="Conte-nos detalhadamente o que está acontecendo com seu computador:
 
-        </div>
-        </div>
-        <p><b>Caso não encontre o que deseja, informe no campo "Outros"</b></p>
-        <div class="upgrade-container">
-            <label for="serv-Outro">Outro(s):</label>
-            <input type="text" id="serv-Outro" name="serv-Outro" placeholder="Digite outros serviços">
-        
-            <label for="nome-cliente">Nome do Cliente:</label>
-            <input type="text" id="nome-cliente" name="nome-cliente" placeholder="Digite seu nome" required>
-        
-            <label for="sobrenome-cliente">Sobrenome:</label>
-            <input type="text" id="sobrenome-cliente" name="sobrenome-cliente" placeholder="Digite seu sobrenome" required>
-        
-            <label for="telefone-cliente">Telefone/WhatsApp:</label>
-            <input type="tel" id="telefone-cliente" name="telefone-cliente" placeholder="(00) 00000-0000" required>
-        </div>
-        <button id="enviar-upgrade" type="submit">Enviar</button>
-        
+• Quando o problema começou?
+• O que você estava fazendo quando aconteceu?
+• Com que frequência ocorre?
+• Há alguma mensagem de erro?
+• O computador liga normalmente?
+• Há sons ou luzes diferentes?
 
+Quanto mais detalhes, melhor poderemos ajudar!"
+                        maxlength="1000"
+                        required
+                        aria-describedby="problema-help char-count"></textarea>
+                    <div id="problema-help" class="help-text">
+                        Descreva todos os sintomas e detalhes que considerar importantes
+                    </div>
+                    <div id="char-count" class="char-counter">0 / 1000 caracteres</div>
+
+                    <!-- Soluções Rápidas (Inicialmente oculta) -->
+                    <div class="quick-solutions">
+                        <div class="quick-solutions-header">
+                            <h3>
+                                <i class="fas fa-bolt" aria-hidden="true"></i>
+                                Soluções Rápidas
+                            </h3>
+                            <button type="button" id="toggle-solutions" class="toggle-solutions" aria-expanded="false">
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                                Ver Opções
+                            </button>
+                        </div>
+                        <p class="help-text">Se você já sabe qual serviço precisa, pode selecionar abaixo</p>
+
+                        <div id="solutions-grid" class="solutions-grid">
+                            <!-- Manutenção Física -->
+                            <div class="category-title">
+                                <i class="fas fa-tools" aria-hidden="true"></i>
+                                Manutenção Física
+                            </div>
+                            
+                            <div class="service-card">
+                                <input type="checkbox" id="formatacao" name="quick-services" value="Formatação">
+                                <div class="service-icon">
+                                    <i class="fas fa-hdd" aria-hidden="true"></i>
+                                </div>
+                                <label for="formatacao">
+                                    Formatação Completa
+                                    <div class="service-description">Reinstalação do sistema operacional</div>
+                                </label>
+                            </div>
+
+                            <div class="service-card">
+                                <input type="checkbox" id="limpeza-interna" name="quick-services" value="Limpeza Interna">
+                                <div class="service-icon">
+                                    <i class="fas fa-broom" aria-hidden="true"></i>
+                                </div>
+                                <label for="limpeza-interna">
+                                    Limpeza Interna
+                                    <div class="service-description">Remoção de poeira dos componentes</div>
+                                </label>
+                            </div>
+
+                            <div class="service-card">
+                                <input type="checkbox" id="limpeza-preventiva" name="quick-services" value="Limpeza Preventiva">
+                                <div class="service-icon">
+                                    <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                                </div>
+                                <label for="limpeza-preventiva">
+                                    Limpeza Preventiva
+                                    <div class="service-description">Manutenção preventiva completa</div>
+                                </label>
+                            </div>
+
+                            <div class="service-card">
+                                <input type="checkbox" id="pasta-termica" name="quick-services" value="Troca de Pasta Térmica">
+                                <div class="service-icon">
+                                    <i class="fas fa-thermometer-half" aria-hidden="true"></i>
+                                </div>
+                                <label for="pasta-termica">
+                                    Troca de Pasta Térmica
+                                    <div class="service-description">Nova pasta térmica no processador</div>
+                                </label>
+                            </div>
+
+                            <div class="service-card">
+                                <input type="checkbox" id="limpeza-cooler" name="quick-services" value="Limpeza completa de cooler e ventoinhas">
+                                <div class="service-icon">
+                                    <i class="fas fa-fan" aria-hidden="true"></i>
+                                </div>
+                                <label for="limpeza-cooler">
+                                    Limpeza de Coolers
+                                    <div class="service-description">Limpeza de coolers e ventoinhas</div>
+                                </label>
+                            </div>
+
+                            <div class="service-card">
+                                <input type="checkbox" id="organizacao-cabos" name="quick-services" value="Organização de cabos internos">
+                                <div class="service-icon">
+                                    <i class="fas fa-project-diagram" aria-hidden="true"></i>
+                                </div>
+                                <label for="organizacao-cabos">
+                                    Organização de Cabos
+                                    <div class="service-description">Organização interna de cabos</div>
+                                </label>
+                            </div>
+
+                            <!-- Manutenção de Software -->
+                            <div class="category-title">
+                                <i class="fas fa-code" aria-hidden="true"></i>
+                                Manutenção de Software
+                            </div>
+
+                            <div class="service-card">
+                                <input type="checkbox" id="drivers" name="quick-services" value="Instalação de drivers">
+                                <div class="service-icon">
+                                    <i class="fas fa-download" aria-hidden="true"></i>
+                                </div>
+                                <label for="drivers">
+                                    Instalação de Drivers
+                                    <div class="service-description">Drivers atualizados</div>
+                                </label>
+                            </div>
+
+                            <div class="service-card">
+                                <input type="checkbox" id="programas" name="quick-services" value="Instalação de programas básicos">
+                                <div class="service-icon">
+                                    <i class="fas fa-laptop-code" aria-hidden="true"></i>
+                                </div>
+                                <label for="programas">
+                                    Programas Básicos
+                                    <div class="service-description">Instalação de programas essenciais</div>
+                                </label>
+                            </div>
+
+                            <div class="service-card">
+                                <input type="checkbox" id="desbloqueio" name="quick-services" value="Desbloqueio">
+                                <div class="service-icon">
+                                    <i class="fas fa-unlock" aria-hidden="true"></i>
+                                </div>
+                                <label for="desbloqueio">
+                                    Desbloqueio
+                                    <div class="service-description">Recuperação de acesso</div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Serviços Selecionados -->
+                        <div id="selected-services" class="selected-services" style="display: none;">
+                            <h4>
+                                <i class="fas fa-check-circle" aria-hidden="true"></i>
+                                Soluções Selecionadas:
+                            </h4>
+                            <ul id="services-list"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dados do Cliente -->
+                <div class="contact-section">
+                    <h3>
+                        <i class="fas fa-user" aria-hidden="true"></i>
+                        Seus Dados para Contato
+                    </h3>
+                    
+                    <div class="form-group">
+                        <label for="nome-cliente" class="required-field">Nome</label>
+                        <input type="text" 
+                               id="nome-cliente" 
+                               name="nome-cliente" 
+                               placeholder="Digite seu primeiro nome" 
+                               required
+                               aria-describedby="nome-help">
+                        <div id="nome-help" class="help-text">Como você gostaria de ser chamado</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sobrenome-cliente" class="required-field">Sobrenome</label>
+                        <input type="text" 
+                               id="sobrenome-cliente" 
+                               name="sobrenome-cliente" 
+                               placeholder="Digite seu sobrenome" 
+                               required
+                               aria-describedby="sobrenome-help">
+                        <div id="sobrenome-help" class="help-text">Para identificação completa</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefone-cliente" class="required-field">Telefone/WhatsApp</label>
+                        <input type="tel" 
+                               id="telefone-cliente" 
+                               name="telefone-cliente" 
+                               placeholder="(11) 99999-9999" 
+                               required
+                               pattern="[\(\)\s\-\+\d]+"
+                               aria-describedby="telefone-help">
+                        <div id="telefone-help" class="help-text">
+                            Número com DDD para contato via WhatsApp
+                        </div>
+                    </div>
+
+                    <button type="submit" id="enviar-upgrade" class="submit-button" disabled>
+                        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                        Solicitar Atendimento
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <!-- Scripts de Acessibilidade -->
     <div vw class="enabled">
         <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper>
@@ -70,6 +259,7 @@
     <script>
         new window.VLibras.Widget('https://vlibras.gov.br/app');
     </script>
+    
     <script src="../src/routes/routes.js"></script>
     <script src="../src/controller/app.js"></script>
     <script src="../src/controller/formManutencao.js"></script>
