@@ -1389,7 +1389,18 @@
             }
         },
         openWhatsapp: function () {
-            var text = 'Olá! Segue meu cartão de visita: ' + (this.opts.publicUrl || window.location.href);
+            var url = this.opts.publicUrl || window.location.href;
+            var text = [
+                'Ol\u00e1! Tudo bem?',
+                '',
+                'Passando para te enviar meu cart\u00e3o de visita digital!',
+                'L\u00e1 voc\u00ea encontra meus servi\u00e7os, informa\u00e7\u00f5es de contato e outras formas de falar comigo.',
+                '',
+                'Acesse meu cart\u00e3o:',
+                url,
+                '',
+                'D\u00e1 uma olhadinha e, se precisar de algum servi\u00e7o, \u00e9 s\u00f3 entrar em contato!'
+            ].join('\n');
             window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener');
         }
     };
