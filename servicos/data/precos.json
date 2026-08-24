@@ -1,6 +1,6 @@
 {
-    "version": "2026.08.23.14",
-    "updated_at": "2026-08-23T23:28:56-03:00",
+    "version": "2026.08.24.01",
+    "updated_at": "2026-08-24T12:37:19-03:00",
     "settings": {
         "company_name": "Digital Drift",
         "whatsapp": "5533984024108",
@@ -250,8 +250,8 @@
             "name": "Visita Técnica",
             "description": "Atendimento técnico no local para avaliação e solução de problemas em computadores, redes e equipamentos.",
             "price": 50,
-            "price_type": "fixo",
-            "price_label": "R$ 50,00",
+            "price_type": "a_partir",
+            "price_label": "A partir de R$ 50,00",
             "category_id": 7,
             "featured": false,
             "order": 10
