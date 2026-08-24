@@ -322,8 +322,8 @@
             if (!dv.phone || dv.phone === '(00) 0000-0000') dv.phone = '(33) 98402-4108';
             if (!dv.email || dv.email === 'contato@empresa.com') dv.email = 'digitaldrift2000@gmail.com';
             if (!dv.address || dv.address === 'Rua Exemplo, 123 - Centro') dv.address = 'R. Raimundo Martins, 20\nSanta Luzia — Manhuaçu/MG';
-            if (!dv.site || dv.site === 'www.seusite.com.br') dv.site = 'mateus1810.github.io';
-            if (!dv.qr || dv.qr === 'https://seusite.com.br') dv.qr = 'https://mateus1810.github.io';
+            if (!dv.site) dv.site = 'www.seusite.com.br';
+            if (!dv.qr) dv.qr = 'https://seusite.com.br';
 
             var previousQr = values.qr;
             values.qr = dv.qr;
