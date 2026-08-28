@@ -1,14 +1,14 @@
-/* MAPOS-CATALOGO-PUBLICO v1.0.8 - render imediato + revalidacao segura */
+/* MAPOS-CATALOGO-PUBLICO v1.1.0 - pagina publica simples */
 (function(){
 'use strict';
 var cfg=window.CATALOGO_CONFIG||{},data=null,query='',category='all';
 var el={
   loading:document.getElementById('loading-state'),error:document.getElementById('error-state'),errorDetail:document.getElementById('error-detail'),
-  featuredSection:document.getElementById('featured-section'),featuredGrid:document.getElementById('featured-grid'),
-  servicesSection:document.getElementById('services-section'),categorySections:document.getElementById('category-sections'),
+  servicesSection:document.getElementById('services-section'),serviceGrid:document.getElementById('service-grid'),
   filters:document.getElementById('category-filters'),search:document.getElementById('service-search'),clear:document.getElementById('clear-search'),
   empty:document.getElementById('empty-state'),reset:document.getElementById('reset-filters'),count:document.getElementById('result-count'),
-  updated:document.getElementById('catalog-updated'),headerWhats:document.getElementById('header-whatsapp'),footer:document.getElementById('footer-text')
+  updated:document.getElementById('catalog-updated'),headerWhats:document.getElementById('header-whatsapp'),
+  helpWhats:document.getElementById('help-whatsapp'),mobileWhats:document.getElementById('mobile-whatsapp'),footer:document.getElementById('footer-text')
 };
 function hide(node){if(node)node.hidden=true}
 function show(node){if(node)node.hidden=false}
@@ -28,40 +28,54 @@ function visibleServices(){
     return normalize((s.name||'')+' '+(s.description||'')+' '+categoryName(s.category_id)).indexOf(q)!==-1;
   });
 }
+function whatsappBase(){return((data.settings||{}).whatsapp||'').replace(/\D/g,'')}
 function waUrl(service){
-  var phone=((data.settings||{}).whatsapp||'').replace(/\D/g,'');
+  var phone=whatsappBase();
   if(!phone)return'';
-  var msg='Olá! Gostaria de solicitar um orçamento para o serviço de '+service.name+'.';
+  var msg='Olá! Vi a tabela de preços e gostaria de atendimento para: '+service.name+'.';
   return'https://wa.me/'+phone+'?text='+encodeURIComponent(msg);
+}
+function generalWaUrl(){
+  var phone=whatsappBase();
+  if(!phone)return'';
+  return'https://wa.me/'+phone+'?text='+encodeURIComponent('Olá! Vi a tabela de preços e preciso de ajuda para escolher o serviço certo.');
 }
 function money(value){
   try{return new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(Number(value)||0)}
   catch(e){return'R$ '+(Number(value)||0).toFixed(2).replace('.',',')}
 }
 function priceBlock(service){
+  var wrap=document.createElement('div');wrap.className='price-area';
+  var label=document.createElement('span');label.className='price-label';label.textContent='Preço';wrap.appendChild(label);
   var box=document.createElement('div');box.className='price';
-  if(service.price_type==='orcamento'){box.className+=' price-quote';box.textContent='Sob orçamento';return box}
-  if(service.price_type==='a_partir'){var small=document.createElement('small');small.textContent='A partir de';box.appendChild(small)}
-  box.appendChild(document.createTextNode(money(service.price)));return box;
+  if(service.price_type==='orcamento'){
+    box.className+=' price-quote';box.textContent='Sob orçamento';wrap.appendChild(box);return wrap;
+  }
+  if(service.price_type==='a_partir'){
+    var small=document.createElement('small');small.textContent='A partir de';box.appendChild(small);
+  }
+  box.appendChild(document.createTextNode(money(service.price)));wrap.appendChild(box);return wrap;
 }
-function card(service,featured){
-  var article=document.createElement('article');article.className='service-card'+(featured?' featured':'');article.id='servico-'+service.id;
+function card(service){
+  var article=document.createElement('article');article.className='service-card'+(service.featured?' featured':'');article.id='servico-'+service.id;
   var top=document.createElement('div');top.className='service-card-top';
   var cat=document.createElement('span');cat.className='category';cat.textContent=categoryName(service.category_id);top.appendChild(cat);
+  if(service.featured){var popular=document.createElement('span');popular.className='popular-badge';popular.textContent='Mais pedido';top.appendChild(popular)}
   var h=document.createElement('h3');h.textContent=service.name||'Serviço';
-  var p=document.createElement('p');p.className='service-description';p.textContent=service.description||'Consulte detalhes e disponibilidade para este serviço.';
-  var foot=document.createElement('div');foot.className='service-card-footer';
-  var price=priceBlock(service),a=document.createElement('a'),url=waUrl(service);a.className='quote-button';a.textContent='Solicitar orçamento';
-  if(url){a.href=url;a.target='_blank';a.rel='noopener noreferrer'}else{a.href='#';a.className+=' disabled';a.setAttribute('aria-disabled','true');a.addEventListener('click',function(ev){ev.preventDefault()})}
-  foot.appendChild(price);foot.appendChild(a);article.appendChild(top);article.appendChild(h);article.appendChild(p);article.appendChild(foot);return article;
+  var price=priceBlock(service);
+  var p=document.createElement('p');p.className='service-description';p.textContent=service.description||'Fale com o atendimento para saber o que está incluído neste serviço.';
+  var a=document.createElement('a'),url=waUrl(service);a.className='quote-button';a.textContent='Quero este serviço';
+  if(url){a.href=url;a.target='_blank';a.rel='noopener noreferrer'}
+  else{a.href='#';a.className+=' disabled';a.setAttribute('aria-disabled','true');a.textContent='Entre em contato para solicitar';a.addEventListener('click',function(ev){ev.preventDefault()})}
+  article.appendChild(top);article.appendChild(h);article.appendChild(price);article.appendChild(p);article.appendChild(a);return article;
 }
 function filterButton(label,id){
-  var b=document.createElement('button');b.type='button';b.className='filter-button'+(String(category)===String(id)?' active':'');
-  b.textContent=label;b.setAttribute('aria-pressed',String(String(category)===String(id)));
+  var active=String(category)===String(id),b=document.createElement('button');b.type='button';b.className='filter-button'+(active?' active':'');
+  b.textContent=label;b.setAttribute('aria-pressed',String(active));
   b.addEventListener('click',function(){category=id;render()});return b;
 }
 function renderFilters(){
-  if(!el.filters)return;el.filters.textContent='';el.filters.appendChild(filterButton('Todos','all'));
+  if(!el.filters)return;el.filters.textContent='';el.filters.appendChild(filterButton('Todos os serviços','all'));
   (data.categories||[]).forEach(function(c){el.filters.appendChild(filterButton(c.name,c.id))});
 }
 function safeHashScroll(){
@@ -72,48 +86,30 @@ function render(){
   if(!data)return;
   renderFilters();
   var services=visibleServices();
-  if(el.featuredGrid)el.featuredGrid.textContent='';
-  if(el.categorySections)el.categorySections.textContent='';
-  var featured=services.filter(function(s){return !!s.featured});
-  featured.forEach(function(s){el.featuredGrid.appendChild(card(s,true))});
-  if(featured.length)show(el.featuredSection);else hide(el.featuredSection);
-
-  var regular=services.filter(function(s){return !s.featured});
-  var grouped={};
-  regular.forEach(function(s){var k=String(s.category_id);(grouped[k]=grouped[k]||[]).push(s)});
-  (data.categories||[]).forEach(function(c){
-    var list=grouped[String(c.id)]||[];if(!list.length)return;
-    var section=document.createElement('section');section.className='category-block';section.dataset.categoryId=String(c.id);
-    var head=document.createElement('div');head.className='category-title';
-    var copy=document.createElement('div');copy.className='category-title-copy';
-    var h=document.createElement('h3');h.textContent=c.name;copy.appendChild(h);
-    if(c.description){var desc=document.createElement('p');desc.textContent=c.description;copy.appendChild(desc)}
-    var n=document.createElement('span');n.textContent=list.length+' '+(list.length===1?'serviço':'serviços');head.appendChild(copy);head.appendChild(n);
-    var grid=document.createElement('div');grid.className='service-grid';list.forEach(function(s){grid.appendChild(card(s,false))});
-    section.appendChild(head);section.appendChild(grid);el.categorySections.appendChild(section);
-  });
-  if(el.count)el.count.textContent=regular.length+' '+(regular.length===1?'serviço':'serviços');
-  if(regular.length)show(el.servicesSection);else hide(el.servicesSection);
-  if(services.length)hide(el.empty);else show(el.empty);
+  if(el.serviceGrid){el.serviceGrid.textContent='';services.forEach(function(s){el.serviceGrid.appendChild(card(s))})}
+  if(el.count)el.count.textContent=services.length+' '+(services.length===1?'serviço encontrado':'serviços encontrados');
+  if(services.length){show(el.servicesSection);hide(el.empty)}else{hide(el.servicesSection);show(el.empty)}
   if(el.clear)el.clear.hidden=!query;
   safeHashScroll();
 }
 function applyMeta(){
   if(el.updated&&data.updated_at){
-    try{el.updated.textContent='Atualizado em '+new Intl.DateTimeFormat('pt-BR',{dateStyle:'short',timeStyle:'short'}).format(new Date(data.updated_at))}
-    catch(e){el.updated.textContent='Atualizado recentemente'}
+    try{el.updated.textContent='Preços atualizados em '+new Intl.DateTimeFormat('pt-BR',{dateStyle:'short',timeStyle:'short'}).format(new Date(data.updated_at))}
+    catch(e){el.updated.textContent='Preços atualizados recentemente'}
   }
   if(el.footer&&(data.settings||{}).footer_text)el.footer.textContent=data.settings.footer_text;
-  var phone=((data.settings||{}).whatsapp||'').replace(/\D/g,'');
-  if(phone&&el.headerWhats){show(el.headerWhats);el.headerWhats.href='https://wa.me/'+phone+'?text='+encodeURIComponent('Olá! Gostaria de informações sobre os serviços.');el.headerWhats.target='_blank';el.headerWhats.rel='noopener noreferrer'}
-  else hide(el.headerWhats);
+  var url=generalWaUrl();
+  [el.headerWhats,el.helpWhats,el.mobileWhats].forEach(function(node){
+    if(!node)return;
+    if(url){show(node);node.href=url;node.target='_blank';node.rel='noopener noreferrer'}else{hide(node)}
+  });
 }
 function start(payload){
   if(!validPayload(payload))throw new Error('Dados públicos inválidos.');
   data=payload;hide(el.loading);hide(el.error);applyMeta();render();
 }
 function fail(message){
-  hide(el.loading);hide(el.featuredSection);hide(el.servicesSection);hide(el.empty);show(el.error);
+  hide(el.loading);hide(el.servicesSection);hide(el.empty);show(el.error);
   if(el.errorDetail&&message)el.errorDetail.textContent=message;
 }
 function refreshFromJson(){
@@ -128,10 +124,10 @@ function refreshFromJson(){
 }
 if(el.search)el.search.addEventListener('input',function(){query=this.value;render()});
 if(el.clear)el.clear.addEventListener('click',function(){query='';if(el.search){el.search.value='';el.search.focus()}render()});
-if(el.reset)el.reset.addEventListener('click',function(){query='';category='all';if(el.search)el.search.value='';render()});
+if(el.reset)el.reset.addEventListener('click',function(){query='';category='all';if(el.search)el.search.value='';render();if(el.search)el.search.focus()});
 try{
   if(validPayload(cfg.embeddedData||cfg.previewData)){start(cfg.embeddedData||cfg.previewData);refreshFromJson()}
   else if(cfg.dataUrl){refreshFromJson()}
   else{fail('Nenhum dado público foi encontrado.')}
-}catch(e){fail('Não foi possível montar o catálogo. Atualize a página e tente novamente.')}
+}catch(e){fail('Não foi possível montar a tabela de preços. Atualize a página e tente novamente.')}
 })();
