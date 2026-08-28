@@ -1,6 +1,6 @@
 {
-    "version": "2026.08.28.02",
-    "updated_at": "2026-08-28T18:46:47-03:00",
+    "version": "2026.08.28.03",
+    "updated_at": "2026-08-28T19:12:24-03:00",
     "settings": {
         "company_name": "Digital Drift",
         "whatsapp": "5533984024108",
@@ -44,6 +44,12 @@
             "name": "Redes e Internet",
             "description": "Serviços de configuração, conexão e manutenção de redes, Wi-Fi e acesso à internet.",
             "order": 80
+        },
+        {
+            "id": 9,
+            "name": "Backup e Dados",
+            "description": "Serviços de cópia, transferência, clonagem e organização de arquivos e dados.",
+            "order": 90
         }
     ],
     "services": [
@@ -277,6 +283,17 @@
             "category_id": 8,
             "featured": false,
             "order": 20
+        },
+        {
+            "id": 23,
+            "name": "Recuperacao de dados",
+            "description": "Recuperação simples de dados perdidos ou apagados",
+            "price": 150,
+            "price_type": "a_partir",
+            "price_label": "A partir de R$ 150,00",
+            "category_id": 9,
+            "featured": true,
+            "order": 10
         }
     ]
 }
