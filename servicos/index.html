@@ -10,8 +10,8 @@
     <meta property="og:title" content="Tabela de Preços | Digital Drift">
     <meta property="og:description" content="Consulte serviços de informática, manutenção, instalação e suporte.">
     <meta property="og:url" content="https://digitaldrift2000.github.io/servicos">
-    <meta property="og:image" content="https://digitaldrift2000.github.io/servicos/assets/img/logo.png">    <link rel="icon" href="assets/img/favicon.svg?v=2026.08.28.04" type="image/svg+xml">
-    <style>/* MAPOS-CATALOGO-PUBLICO v1.4.0 - busca popular automatica e configuravel */
+    <meta property="og:image" content="https://digitaldrift2000.github.io/servicos/assets/img/logo.png">    <link rel="icon" href="assets/img/favicon.svg?v=2026.08.28.05" type="image/svg+xml">
+    <style>/* MAPOS-CATALOGO-PUBLICO v2.0 - assistente, busca popular e acessibilidade */
 :root{
   --bg:#f3f5f7;
   --surface:#fff;
@@ -169,21 +169,52 @@ h1{margin:6px 0 10px;color:var(--strong);font-size:clamp(2.15rem,6.3vw,3.55rem);
   .quote-button{min-height:48px}
 }
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+/* MAPOS-CATALOGO-PUBLICO v2.0 - assistente para leigos, voz e acessibilidade */
+.header-actions{display:flex;align-items:center;gap:8px}
+.font-toggle{min-height:42px;padding:8px 12px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--strong);font-weight:850;cursor:pointer}
+.font-toggle:hover,.font-toggle:focus-visible{border-color:#9fb0bc;outline:3px solid rgba(23,105,170,.10);outline-offset:1px}
+html.large-text{font-size:118%}
+html.large-text .brand-copy span,html.large-text .service-original-name{font-size:.78rem}
+.helper-entry{width:100%;max-width:790px;margin-top:24px;display:grid;grid-template-columns:52px 1fr 28px;align-items:center;gap:12px;padding:14px 15px;border:2px solid #bfe0cb;border-radius:17px;background:linear-gradient(135deg,#f0faf4,#fff);color:#173d29;text-align:left;cursor:pointer;box-shadow:0 7px 20px rgba(23,120,72,.07)}
+.helper-entry:hover,.helper-entry:focus-visible{border-color:#65aa7f;box-shadow:0 10px 28px rgba(23,120,72,.12);outline:none}
+.helper-entry-icon{width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:#16864f;color:#fff;font-size:1.45rem;font-weight:900}
+.helper-entry span:nth-child(2){display:flex;flex-direction:column}.helper-entry strong{font-size:1.03rem}.helper-entry small{margin-top:2px;color:#567063;font-size:.84rem}.helper-entry b{font-size:1.8rem;color:#43805e;text-align:center}
+.search-control{grid-template-columns:50px minmax(0,1fr) auto auto}
+.voice-search{width:40px;height:40px;border:0;border-radius:50%;background:#edf8f2;color:#126d40;display:grid;place-items:center;cursor:pointer;margin:auto 2px}
+.voice-search svg{width:20px;height:20px}.voice-search.listening{background:#16864f;color:#fff;animation:pulseVoice 1s ease-in-out infinite}
+@keyframes pulseVoice{50%{box-shadow:0 0 0 7px rgba(22,134,79,.13)}}
+.helper-modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:18px}
+.helper-backdrop{position:absolute;inset:0;background:rgba(16,24,20,.55);backdrop-filter:blur(3px)}
+.helper-dialog{position:relative;width:min(620px,100%);max-height:min(760px,calc(100vh - 36px));overflow:auto;border-radius:24px;background:#fffefa;box-shadow:0 28px 90px rgba(15,28,21,.26);padding:24px}
+.helper-dialog-top{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.helper-kicker{display:block;color:var(--green-dark);font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.06em}.helper-dialog h2{margin:3px 0 0;color:var(--strong);font-size:1.65rem}.helper-close{width:42px;height:42px;border:0;border-radius:50%;background:#eef1ef;color:#435149;font-size:1.55rem;cursor:pointer;flex:0 0 auto}
+.helper-question{padding:20px 0 8px}.helper-question h3{margin:0 0 5px;color:var(--strong);font-size:1.24rem}.helper-question p{margin:0;color:var(--muted);font-size:.92rem}.helper-choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.helper-choice{min-height:62px;padding:12px 14px;border:1px solid #dce5df;border-radius:14px;background:#fff;color:#263b30;text-align:left;font-weight:850;cursor:pointer}.helper-choice small{display:block;margin-top:3px;color:#718078;font-weight:600;line-height:1.3}.helper-choice:hover,.helper-choice:focus-visible{border-color:#79ad8d;background:#f4faf6;outline:3px solid rgba(47,122,95,.10)}
+.helper-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}.helper-back{min-height:44px;padding:9px 14px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--strong);font-weight:800;cursor:pointer}.helper-whatsapp{min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:9px 14px;border-radius:11px;background:var(--green);color:#fff;text-decoration:none;font-weight:850;text-align:center}
+body.helper-open{overflow:hidden}
+@media(max-width:740px){
+  .font-toggle{min-height:39px;padding:7px 9px;font-size:.8rem}.header-actions{gap:5px}.helper-entry{margin-top:19px;grid-template-columns:46px 1fr 22px;padding:12px}.helper-entry-icon{width:40px;height:40px}.helper-entry small{font-size:.76rem}
+  .helper-modal{padding:8px;align-items:end}.helper-dialog{width:100%;max-height:88vh;border-radius:22px 22px 12px 12px;padding:19px 15px}.helper-choices{grid-template-columns:1fr;gap:8px}.helper-choice{min-height:56px}.helper-footer{flex-direction:column-reverse;align-items:stretch}.helper-back,.helper-whatsapp{width:100%}
+}
+@media(max-width:410px){html.large-text{font-size:110%}.brand-copy span{display:none}.font-toggle{padding:7px 8px}}
 </style>
 </head>
 <body>
-    <!-- MAPOS-CATALOGO-PUBLICO-POVAO-V1.4 -->
+    <!-- MAPOS-CATALOGO-PUBLICO-POVAO-V2.0 -->
     <a class="skip-link" href="#servicos">Ir direto para os preços</a>
     
     <header class="site-header">
         <div class="shell header-inner">
             <div class="brand">
-                <img src="assets/img/logo.png?v=2026.08.28.04" alt="Logo Digital Drift">                <div class="brand-copy">
+                <img src="assets/img/logo.png?v=2026.08.28.05" alt="Logo Digital Drift">                <div class="brand-copy">
                     <strong>Digital Drift</strong>
                     <span>Assistência e serviços</span>
                 </div>
             </div>
-            <a class="header-cta" id="header-whatsapp" href="#" hidden>Chamar no WhatsApp</a>
+            <div class="header-actions">
+                <button class="font-toggle" id="font-toggle" type="button" aria-label="Aumentar tamanho das letras">A+ Letras</button>
+                <a class="header-cta" id="header-whatsapp" href="#" hidden>Chamar no WhatsApp</a>
+            </div>
         </div>
     </header>
 
@@ -193,6 +224,12 @@ h1{margin:6px 0 10px;color:var(--strong);font-size:clamp(2.15rem,6.3vw,3.55rem);
                 <span class="eyebrow">Preço antes de chamar</span>
                 <h1>O que aconteceu com seu computador?</h1>
                 <p class="hero-lead">Escolha uma situação abaixo ou escreva do seu jeito. A gente mostra os serviços que mais combinam com o problema.</p>
+
+                <button class="helper-entry" id="open-helper" type="button">
+                    <span class="helper-entry-icon" aria-hidden="true">?</span>
+                    <span><strong>Não sei o que escolher</strong><small>Me faça algumas perguntas e me ajude.</small></span>
+                    <b aria-hidden="true">›</b>
+                </button>
 
                 <div class="problem-box" aria-labelledby="problem-title">
                     <div class="problem-heading">
@@ -207,6 +244,9 @@ h1{margin:6px 0 10px;color:var(--strong);font-size:clamp(2.15rem,6.3vw,3.55rem);
                     <div class="search-control">
                         <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M10.5 4a6.5 6.5 0 1 0 3.99 11.63l4.44 4.44 1.14-1.14-4.44-4.44A6.5 6.5 0 0 0 10.5 4m0 1.6a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8"/></svg>
                         <input id="service-search" type="search" autocomplete="off" placeholder="Ex.: não liga, vírus, tela quebrada, Wi-Fi...">
+                        <button id="voice-search" class="voice-search" type="button" aria-label="Falar o problema" title="Falar o problema" hidden>
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3m5-3a1 1 0 1 1 2 0 7 7 0 0 1-6 6.93V20h3a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2h3v-2.07A7 7 0 0 1 5 11a1 1 0 1 1 2 0 5 5 0 0 0 10 0"/></svg>
+                        </button>
                         <button id="clear-search" type="button" aria-label="Limpar pesquisa" hidden>×</button>
                     </div>
                     <p class="search-tip"><strong>Pode escrever como você fala.</strong> A busca entende frases do dia a dia, como “não liga”, “apaguei minhas fotos”, “está travando”, “bateria ruim” e “internet caindo”.</p>
@@ -258,6 +298,24 @@ h1{margin:6px 0 10px;color:var(--strong);font-size:clamp(2.15rem,6.3vw,3.55rem);
 
     <a id="mobile-whatsapp" class="mobile-whatsapp" href="#" hidden>Chamar no WhatsApp</a>
 
+    <div class="helper-modal" id="helper-modal" hidden>
+        <div class="helper-backdrop" data-helper-close></div>
+        <section class="helper-dialog" role="dialog" aria-modal="true" aria-labelledby="helper-title">
+            <div class="helper-dialog-top">
+                <div>
+                    <span class="helper-kicker">Sem termos técnicos</span>
+                    <h2 id="helper-title">Vamos descobrir juntos</h2>
+                </div>
+                <button class="helper-close" type="button" data-helper-close aria-label="Fechar">×</button>
+            </div>
+            <div id="helper-content"></div>
+            <div class="helper-footer">
+                <button id="helper-back" class="helper-back" type="button" hidden>Voltar</button>
+                <a id="helper-whatsapp" class="helper-whatsapp" href="#" hidden>Prefiro explicar no WhatsApp</a>
+            </div>
+        </section>
+    </div>
+
     <footer class="site-footer">
         <div class="shell footer-inner">
             <div><strong>Digital Drift</strong><p id="footer-text">Valores sujeitos à avaliação quando o serviço exigir diagnóstico prévio.</p></div>
@@ -267,16 +325,16 @@ h1{margin:6px 0 10px;color:var(--strong);font-size:clamp(2.15rem,6.3vw,3.55rem);
 
     <script>
         window.CATALOGO_CONFIG = {
-            dataUrl: "data/precos-2026.08.28.04.json?v=2026.08.28.04",
-            embeddedData: {"version":"2026.08.28.04","updated_at":"2026-08-28T21:53:45-03:00","settings":{"company_name":"Digital Drift","whatsapp":"5533984024108","header_text":"Serviços de informática com preços claros e atendimento profissional.","footer_text":"Valores sujeitos à avaliação quando o serviço exigir diagnóstico prévio.","public_url":"https://digitaldrift2000.github.io/servicos"},"categories":[{"id":1,"name":"Computadores e Sistemas","description":"Serviços de instalação, configuração, manutenção e otimização de computadores e sistemas operacionais.","order":10},{"id":2,"name":"Hardware","description":"Serviços de instalação, substituição e configuração de componentes e peças do computador.","order":20},{"id":4,"name":"Manutenção","description":"Serviços de limpeza, manutenção preventiva e correção de problemas em computadores.","order":40},{"id":5,"name":"Diagnóstico","description":"Identificação de falhas e testes para verificar o funcionamento do computador e seus componentes.","order":50},{"id":7,"name":"Atendimento","description":"Serviços de suporte técnico e atendimento presencial para computadores e equipamentos.","order":70},{"id":8,"name":"Redes e Internet","description":"Serviços de configuração, conexão e manutenção de redes, Wi-Fi e acesso à internet.","order":80},{"id":9,"name":"Backup e Dados","description":"Serviços de cópia, transferência, clonagem e organização de arquivos e dados.","order":90}],"services":[{"id":1,"name":"Kit formatação","description":"Formatação do sistema com instalação de programas básicos e drivers essenciais com backup.","price":130,"price_type":"fixo","price_label":"R$ 130,00","category_id":1,"featured":true,"order":10},{"id":6,"name":"Rem. vírus","description":"Remoção de Vírus do distema.","price":120,"price_type":"fixo","price_label":"R$ 120,00","category_id":1,"featured":false,"order":30},{"id":7,"name":"Instalacao de drivers","description":"Instalação e configuração dos drivers necessários para o correto funcionamento do computador e de seus componentes.","price":30,"price_type":"fixo","price_label":"R$ 30,00","category_id":1,"featured":false,"order":40},{"id":8,"name":"Atualizacao BIOS/UEFI","description":"Atualização da BIOS ou UEFI da placa-mãe","price":60,"price_type":"fixo","price_label":"R$ 60,00","category_id":1,"featured":false,"order":50},{"id":9,"name":"Inst. Windows","description":"Instalação do sistema operacional Windows no computador.","price":80,"price_type":"fixo","price_label":"R$ 80,00","category_id":1,"featured":false,"order":60},{"id":10,"name":"Otimização do sistema.","description":"Procedimento de otimização do sistema operacional para a melhoria.","price":100,"price_type":"fixo","price_label":"R$ 100,00","category_id":1,"featured":false,"order":70},{"id":3,"name":"Clonagem SSD/HD","description":"Clonagem de HD ou SSD para transferência de todos os dados para outro dispositivo de armazenamento.","price":100,"price_type":"a_partir","price_label":"A partir de R$ 100,00","category_id":2,"featured":true,"order":20},{"id":11,"name":"Instalação de SSD/HD + Sistema","description":"Instalação física de SSD ou HD no equipamento com a instalação do sistema operacional.","price":150,"price_type":"fixo","price_label":"R$ 150,00","category_id":2,"featured":false,"order":30},{"id":12,"name":"Troca de peça simples","description":"Substituição de peças e componentes simples de hardware no equipamento.","price":60,"price_type":"fixo","price_label":"R$ 60,00","category_id":2,"featured":false,"order":40},{"id":13,"name":"Troca Bateria Notebook","description":"Substituição da bateria do notebook.","price":150,"price_type":"a_partir","price_label":"A partir de R$ 150,00","category_id":2,"featured":false,"order":50},{"id":14,"name":"Troca Tela Notebook","description":"Substituição da tela do notebook.","price":170,"price_type":"a_partir","price_label":"A partir de R$ 170,00","category_id":2,"featured":false,"order":60},{"id":15,"name":"Troca de fan/cooler","description":"Substituição do cooler ou fan do computador para restabelecer o desempenho.","price":70,"price_type":"fixo","price_label":"R$ 70,00","category_id":2,"featured":false,"order":70},{"id":4,"name":"Limpeza Preventiva","description":"Limpeza interna do equipamento para remoção de poeira e sujeira, ajudando a melhorar a ventilação e prevenir superaquecimento.","price":130,"price_type":"fixo","price_label":"R$ 130,00","category_id":4,"featured":true,"order":20},{"id":16,"name":"Limpeza básica","description":"Remoção de poeira e limpeza da parte externa.","price":80,"price_type":"fixo","price_label":"R$ 80,00","category_id":4,"featured":false,"order":30},{"id":17,"name":"Limpeza Completa","description":"Higienização e limpeza completa do computador.","price":200,"price_type":"a_partir","price_label":"A partir de R$ 200,00","category_id":4,"featured":false,"order":40},{"id":18,"name":"Limpeza + pasta termica","description":"Realização de limpeza básica e substituição da pasta térmica.","price":95,"price_type":"fixo","price_label":"R$ 95,00","category_id":4,"featured":false,"order":50},{"id":19,"name":"Diagnóstico básico","description":"Realização de teste básico de hardware para verificação dos componentes","price":50,"price_type":"fixo","price_label":"R$ 50,00","category_id":5,"featured":false,"order":10},{"id":20,"name":"Diagnóstico avançado","description":"Realização de teste completo de hardware para análise e identificação de problemas.","price":110,"price_type":"fixo","price_label":"R$ 110,00","category_id":5,"featured":false,"order":20},{"id":22,"name":"Visita Técnica","description":"Atendimento técnico no local para avaliação e solução de problemas em computadores, redes e equipamentos.","price":50,"price_type":"a_partir","price_label":"A partir de R$ 50,00","category_id":7,"featured":false,"order":10},{"id":5,"name":"Configuração de roteador","description":"Configuração e ajuste de roteadores, incluindo conexão com a internet, Wi-Fi, alteração de nome e senha da rede e configurações básicas.","price":90,"price_type":"fixo","price_label":"R$ 90,00","category_id":8,"featured":true,"order":10},{"id":21,"name":"Configuração de rede doméstica","description":"Configuração e organização da rede doméstica, incluindo conexão de dispositivos, Wi-Fi e ajustes básicos de rede.","price":120,"price_type":"a_partir","price_label":"A partir de R$ 120,00","category_id":8,"featured":false,"order":20},{"id":23,"name":"Recuperacao de dados","description":"Recuperação simples de dados perdidos ou apagados","price":150,"price_type":"a_partir","price_label":"A partir de R$ 150,00","category_id":9,"featured":true,"order":10}]},
+            dataUrl: "data/precos-2026.08.28.05.json?v=2026.08.28.05",
+            embeddedData: {"version":"2026.08.28.05","updated_at":"2026-08-28T22:53:13-03:00","settings":{"company_name":"Digital Drift","whatsapp":"5533984024108","header_text":"Serviços de informática com preços claros e atendimento profissional.","footer_text":"Valores sujeitos à avaliação quando o serviço exigir diagnóstico prévio.","public_url":"https://digitaldrift2000.github.io/servicos"},"categories":[{"id":1,"name":"Computadores e Sistemas","description":"Serviços de instalação, configuração, manutenção e otimização de computadores e sistemas operacionais.","order":10},{"id":2,"name":"Hardware","description":"Serviços de instalação, substituição e configuração de componentes e peças do computador.","order":20},{"id":4,"name":"Manutenção","description":"Serviços de limpeza, manutenção preventiva e correção de problemas em computadores.","order":40},{"id":5,"name":"Diagnóstico","description":"Identificação de falhas e testes para verificar o funcionamento do computador e seus componentes.","order":50},{"id":7,"name":"Atendimento","description":"Serviços de suporte técnico e atendimento presencial para computadores e equipamentos.","order":70},{"id":8,"name":"Redes e Internet","description":"Serviços de configuração, conexão e manutenção de redes, Wi-Fi e acesso à internet.","order":80},{"id":9,"name":"Backup e Dados","description":"Serviços de cópia, transferência, clonagem e organização de arquivos e dados.","order":90}],"services":[{"id":1,"name":"Kit formatação","description":"Formatação do sistema com instalação de programas básicos e drivers essenciais com backup.","price":130,"price_type":"fixo","price_label":"R$ 130,00","category_id":1,"featured":true,"order":10},{"id":6,"name":"Rem. vírus","description":"Remoção de Vírus do distema.","price":120,"price_type":"fixo","price_label":"R$ 120,00","category_id":1,"featured":false,"order":30},{"id":7,"name":"Instalacao de drivers","description":"Instalação e configuração dos drivers necessários para o correto funcionamento do computador e de seus componentes.","price":30,"price_type":"fixo","price_label":"R$ 30,00","category_id":1,"featured":false,"order":40},{"id":8,"name":"Atualizacao BIOS/UEFI","description":"Atualização da BIOS ou UEFI da placa-mãe","price":60,"price_type":"fixo","price_label":"R$ 60,00","category_id":1,"featured":false,"order":50},{"id":9,"name":"Inst. Windows","description":"Instalação do sistema operacional Windows no computador.","price":80,"price_type":"fixo","price_label":"R$ 80,00","category_id":1,"featured":false,"order":60},{"id":10,"name":"Otimização do sistema.","description":"Procedimento de otimização do sistema operacional para a melhoria.","price":100,"price_type":"fixo","price_label":"R$ 100,00","category_id":1,"featured":false,"order":70},{"id":3,"name":"Clonagem SSD/HD","description":"Clonagem de HD ou SSD para transferência de todos os dados para outro dispositivo de armazenamento.","price":100,"price_type":"a_partir","price_label":"A partir de R$ 100,00","category_id":2,"featured":true,"order":20},{"id":11,"name":"Instalação de SSD/HD + Sistema","description":"Instalação física de SSD ou HD no equipamento com a instalação do sistema operacional.","price":150,"price_type":"fixo","price_label":"R$ 150,00","category_id":2,"featured":false,"order":30},{"id":12,"name":"Troca de peça simples","description":"Substituição de peças e componentes simples de hardware no equipamento.","price":60,"price_type":"fixo","price_label":"R$ 60,00","category_id":2,"featured":false,"order":40},{"id":13,"name":"Troca Bateria Notebook","description":"Substituição da bateria do notebook.","price":150,"price_type":"a_partir","price_label":"A partir de R$ 150,00","category_id":2,"featured":false,"order":50},{"id":14,"name":"Troca Tela Notebook","description":"Substituição da tela do notebook.","price":170,"price_type":"a_partir","price_label":"A partir de R$ 170,00","category_id":2,"featured":false,"order":60},{"id":15,"name":"Troca de fan/cooler","description":"Substituição do cooler ou fan do computador para restabelecer o desempenho.","price":70,"price_type":"fixo","price_label":"R$ 70,00","category_id":2,"featured":false,"order":70},{"id":4,"name":"Limpeza Preventiva","description":"Limpeza interna do equipamento para remoção de poeira e sujeira, ajudando a melhorar a ventilação e prevenir superaquecimento.","price":130,"price_type":"fixo","price_label":"R$ 130,00","category_id":4,"featured":true,"order":20},{"id":16,"name":"Limpeza básica","description":"Remoção de poeira e limpeza da parte externa.","price":80,"price_type":"fixo","price_label":"R$ 80,00","category_id":4,"featured":false,"order":30},{"id":17,"name":"Limpeza Completa","description":"Higienização e limpeza completa do computador.","price":200,"price_type":"a_partir","price_label":"A partir de R$ 200,00","category_id":4,"featured":false,"order":40},{"id":18,"name":"Limpeza + pasta termica","description":"Realização de limpeza básica e substituição da pasta térmica.","price":95,"price_type":"fixo","price_label":"R$ 95,00","category_id":4,"featured":false,"order":50},{"id":19,"name":"Diagnóstico básico","description":"Realização de teste básico de hardware para verificação dos componentes","price":50,"price_type":"fixo","price_label":"R$ 50,00","category_id":5,"featured":false,"order":10},{"id":20,"name":"Diagnóstico avançado","description":"Realização de teste completo de hardware para análise e identificação de problemas.","price":110,"price_type":"fixo","price_label":"R$ 110,00","category_id":5,"featured":false,"order":20},{"id":22,"name":"Visita Técnica","description":"Atendimento técnico no local para avaliação e solução de problemas em computadores, redes e equipamentos.","price":50,"price_type":"a_partir","price_label":"A partir de R$ 50,00","category_id":7,"featured":false,"order":10},{"id":5,"name":"Configuração de roteador","description":"Configuração e ajuste de roteadores, incluindo conexão com a internet, Wi-Fi, alteração de nome e senha da rede e configurações básicas.","price":90,"price_type":"fixo","price_label":"R$ 90,00","category_id":8,"featured":true,"order":10},{"id":21,"name":"Configuração de rede doméstica","description":"Configuração e organização da rede doméstica, incluindo conexão de dispositivos, Wi-Fi e ajustes básicos de rede.","price":120,"price_type":"a_partir","price_label":"A partir de R$ 120,00","category_id":8,"featured":false,"order":20},{"id":23,"name":"Recuperacao de dados","description":"Recuperação simples de dados perdidos ou apagados","price":150,"price_type":"a_partir","price_label":"A partir de R$ 150,00","category_id":9,"featured":true,"order":10}]},
             previewData: null,
             companyName: "Digital Drift"        };
     </script>
-    <script>/* MAPOS-CATALOGO-PUBLICO v1.4.0 - busca popular automatica e configuravel */
+    <script>/* MAPOS-CATALOGO-PUBLICO v2.0 - assistente, voz e metadados simples */
 (function(){
 'use strict';
 
-var cfg=window.CATALOGO_CONFIG||{},data=null,query='',category='all';
+var cfg=window.CATALOGO_CONFIG||{},data=null,query='',category='all',directServiceIds=null;
 var el={
   loading:document.getElementById('loading-state'),error:document.getElementById('error-state'),errorDetail:document.getElementById('error-detail'),
   servicesSection:document.getElementById('services-section'),serviceGrid:document.getElementById('service-grid'),
@@ -284,7 +342,9 @@ var el={
   shortcuts:document.getElementById('problem-shortcuts'),empty:document.getElementById('empty-state'),reset:document.getElementById('reset-filters'),count:document.getElementById('result-count'),
   updated:document.getElementById('catalog-updated'),headerWhats:document.getElementById('header-whatsapp'),
   helpWhats:document.getElementById('help-whatsapp'),emptyWhats:document.getElementById('empty-whatsapp'),mobileWhats:document.getElementById('mobile-whatsapp'),footer:document.getElementById('footer-text'),
-  title:document.getElementById('services-title'),sectionHelp:document.getElementById('section-help')
+  title:document.getElementById('services-title'),sectionHelp:document.getElementById('section-help'),
+  fontToggle:document.getElementById('font-toggle'),voice:document.getElementById('voice-search'),openHelper:document.getElementById('open-helper'),
+  helperModal:document.getElementById('helper-modal'),helperContent:document.getElementById('helper-content'),helperBack:document.getElementById('helper-back'),helperWhats:document.getElementById('helper-whatsapp')
 };
 
 function hide(node){if(node)node.hidden=true}
@@ -366,18 +426,37 @@ var friendlyDescriptions={
 };
 
 /*
- * Frases extras sem mexer no codigo:
- * No campo Descricao de qualquer servico, adicione no final:
- * [busca: apaguei minhas fotos; perdi meus arquivos; quero recuperar documentos]
- * O trecho entre [busca: ...] entra na busca, mas nao aparece para o cliente.
+ * Metadados opcionais no campo Descricao (nao aparecem para o cliente):
+ * [busca: apaguei minhas fotos; perdi meus arquivos]
+ * [nome-publico: Recuperar fotos e arquivos]
+ * [atalho: Perdi arquivos ou fotos | apaguei minhas fotos; perdi meus arquivos]
  */
 function customSearchHints(service){
-  var source=(service&&service.description)||'',found=[],re=/\[(?:busca|buscar|termos?|cliente)\s*:\s*([^\]]+)\]/gi,m;
-  while((m=re.exec(source))!==null){if(m[1])found.push(m[1].replace(/[;,|]+/g,' '))}
+  var source=(service&&service.description)||'',found=[],m;
+  var searchRe=/\[(?:busca|buscar|termos?|cliente)\s*:\s*([^\]]+)\]/gi;
+  var shortcutRe=/\[(?:atalho|problema)\s*:\s*([^|\]]+)\|([^\]]+)\]/gi;
+  while((m=searchRe.exec(source))!==null){if(m[1])found.push(m[1].replace(/[;,|]+/g,' '))}
+  while((m=shortcutRe.exec(source))!==null){if(m[1])found.push(m[1]);if(m[2])found.push(m[2].replace(/[;,|]+/g,' '))}
   return found.join(' ');
 }
+function customPublicName(service){
+  var source=(service&&service.description)||'',m=/\[(?:nome-publico|nome publico|publico)\s*:\s*([^\]]+)\]/i.exec(source);
+  return m&&m[1]?m[1].replace(/^\s+|\s+$/g,''):'';
+}
+function customShortcuts(service){
+  var source=(service&&service.description)||'',out=[],re=/\[(?:atalho|problema)\s*:\s*([^|\]]+)\|([^\]]+)\]/gi,m;
+  while((m=re.exec(source))!==null){
+    var label=(m[1]||'').replace(/^\s+|\s+$/g,''),terms=(m[2]||'').replace(/^\s+|\s+$/g,'');
+    if(label&&terms)out.push({label:label,terms:terms});
+  }
+  return out;
+}
 function stripSearchHints(value){
-  return (value||'').toString().replace(/\s*\[(?:busca|buscar|termos?|cliente)\s*:\s*[^\]]+\]\s*/gi,' ').replace(/\s{2,}/g,' ').replace(/^\s+|\s+$/g,'');
+  return (value||'').toString()
+    .replace(/\s*\[(?:busca|buscar|termos?|cliente)\s*:\s*[^\]]+\]\s*/gi,' ')
+    .replace(/\s*\[(?:nome-publico|nome publico|publico)\s*:\s*[^\]]+\]\s*/gi,' ')
+    .replace(/\s*\[(?:atalho|problema)\s*:\s*[^\]]+\]\s*/gi,' ')
+    .replace(/\s{2,}/g,' ').replace(/^\s+|\s+$/g,'');
 }
 
 /*
@@ -389,6 +468,7 @@ var intentPacks=[
   {id:'nao-liga',label:'Não liga',detect:['diagnostico','placa mae','fonte','reparo'],aliases:'nao liga nao acende nao da sinal morreu apagado aperto botao nada acontece sem energia sem sinal',query:'nao liga'},
   {id:'lento',label:'Está lento ou travando',detect:['otimizacao','formatacao','windows','ssd','diagnostico'],aliases:'lento travando trava demora demorando pesado engasgando congelando lerdo nao responde fica pensando demora abrir demora ligar',query:'lento travando'},
   {id:'quente',label:'Está esquentando',detect:['limpeza','pasta termica','fan','cooler','ventoinha'],aliases:'esquentando aquecendo quente temperatura superaquecendo superaquece barulho ventilador ventoinha fan cooler',query:'esquentando'},
+  {id:'limpeza',label:'Quero fazer uma limpeza',detect:['limpeza'],aliases:'limpeza limpar poeira sujeira manutencao preventiva pasta termica higienizar higienizacao',query:'limpeza'},
   {id:'formatar',label:'Quero formatar',detect:['formatacao','inst windows','instalacao windows','windows'],aliases:'formatar formatacao reinstalar windows zerar sistema instalar windows limpar sistema comecar do zero',query:'formatar windows'},
   {id:'virus',label:'Vírus ou propaganda',detect:['virus','malware','formatacao'],aliases:'virus malware propaganda anuncio popup pop up janela abrindo sozinho pagina abrindo sozinho infectado invasao estranho navegador',query:'virus propaganda'},
   {id:'ssd',label:'Quero colocar SSD / HD',detect:['ssd','hd','clonagem','armazenamento'],aliases:'ssd hd disco armazenamento upgrade colocar ssd trocar hd sem espaco pouco espaco armazenamento cheio passar tudo copiar disco',query:'ssd hd'},
@@ -409,7 +489,7 @@ var intentPacks=[
 ];
 
 function serviceKey(service){return normalize(service&&service.name)}
-function friendlyServiceName(service){return friendlyNames[serviceKey(service)]||(service.name||'Serviço')}
+function friendlyServiceName(service){return customPublicName(service)||friendlyNames[serviceKey(service)]||(service.name||'Serviço')}
 function friendlyDescription(service){
   var key=serviceKey(service);
   return friendlyDescriptions[key]||stripSearchHints(service.description||'')||'Se tiver dúvida, chama a gente que explicamos direitinho.';
@@ -440,6 +520,7 @@ function serviceMatchesQuery(service,q){
 }
 function visibleServices(){
   return(data.services||[]).filter(function(s){
+    if(directServiceIds&&directServiceIds.length&&directServiceIds.indexOf(String(s.id))===-1)return false;
     if(category!=='all'&&String(s.category_id)!==String(category))return false;
     return serviceMatchesQuery(s,query);
   });
@@ -480,9 +561,6 @@ function card(service){
   if(service.featured){var popular=document.createElement('span');popular.className='popular-badge';popular.textContent='Mais pedido';top.appendChild(popular)}
   var friendly=friendlyServiceName(service),h=document.createElement('h3');h.textContent=friendly;
   main.appendChild(top);main.appendChild(h);
-  if(normalize(friendly)!==normalize(service.name||'')){
-    var original=document.createElement('span');original.className='service-original-name';original.textContent='Nome do serviço: '+service.name;main.appendChild(original);
-  }
   var p=document.createElement('p');p.className='service-description';p.textContent=friendlyDescription(service);main.appendChild(p);
 
   var action=document.createElement('div');action.className='service-action';action.appendChild(priceBlock(service));
@@ -494,7 +572,7 @@ function card(service){
 function filterButton(label,id){
   var active=String(category)===String(id),b=document.createElement('button');b.type='button';b.className='filter-button'+(active?' active':'');
   b.textContent=label;b.setAttribute('aria-pressed',String(active));
-  b.addEventListener('click',function(){category=id;query='';if(el.search)el.search.value='';clearShortcutActive();render()});
+  b.addEventListener('click',function(){category=id;query='';directServiceIds=null;if(el.search)el.search.value='';clearShortcutActive();render()});
   return b;
 }
 function renderFilters(){
@@ -508,21 +586,44 @@ function clearShortcutActive(){
 function availableIntentPacks(){
   var services=data&&data.services?data.services:[],available=[];
   intentPacks.forEach(function(pack){
-    var exists=services.some(function(service){return packApplies(service,pack)});
-    if(exists)available.push(pack);
+    var ids=services.filter(function(service){return packApplies(service,pack)}).map(function(service){return String(service.id)});
+    if(ids.length){var item={};Object.keys(pack).forEach(function(k){item[k]=pack[k]});item.ids=ids;available.push(item)}
   });
-  return available.slice(0,14);
+  return available;
+}
+function availableCustomShortcuts(){
+  var grouped={};
+  (data.services||[]).forEach(function(service){
+    customShortcuts(service).forEach(function(item){
+      var key=normalize(item.label);if(!key)return;
+      if(!grouped[key])grouped[key]={id:'custom-'+key.replace(/\s+/g,'-'),label:item.label,ids:[],terms:[]};
+      if(grouped[key].ids.indexOf(String(service.id))===-1)grouped[key].ids.push(String(service.id));
+      grouped[key].terms.push(item.terms);
+    });
+  });
+  return Object.keys(grouped).map(function(k){return grouped[k]});
+}
+function allProblemShortcuts(){
+  var list=availableIntentPacks().concat(availableCustomShortcuts()),seen={},out=[];
+  list.forEach(function(item){var key=normalize(item.label);if(!key||seen[key])return;seen[key]=1;out.push(item)});
+  return out;
 }
 function renderShortcuts(){
   if(!el.shortcuts)return;
   el.shortcuts.textContent='';
-  availableIntentPacks().forEach(function(pack){
-    var b=document.createElement('button');b.type='button';b.setAttribute('data-query',pack.query);b.textContent=pack.label;el.shortcuts.appendChild(b);
+  allProblemShortcuts().slice(0,16).forEach(function(pack){
+    var b=document.createElement('button');b.type='button';b.setAttribute('data-ids',(pack.ids||[]).join(','));b.setAttribute('data-label',pack.label||'');b.textContent=pack.label;el.shortcuts.appendChild(b);
   });
 }
 function applyShortcut(button){
-  if(!button)return;query=button.getAttribute('data-query')||'';category='all';if(el.search)el.search.value='';clearShortcutActive();button.classList.add('active');render();
+  if(!button)return;
+  var ids=(button.getAttribute('data-ids')||'').split(',').filter(Boolean);query='';category='all';directServiceIds=ids.length?ids:null;if(el.search)el.search.value='';clearShortcutActive();button.classList.add('active');render();
   var target=document.getElementById('servicos');if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function applyPackById(id){
+  var pack=availableIntentPacks().find(function(x){return x.id===id});if(!pack)return false;
+  query='';category='all';directServiceIds=pack.ids||null;if(el.search)el.search.value='';clearShortcutActive();render();closeHelper();
+  var target=document.getElementById('servicos');if(target)target.scrollIntoView({behavior:'smooth',block:'start'});return true;
 }
 function safeHashScroll(){
   if(!location.hash)return;
@@ -532,8 +633,8 @@ function render(){
   if(!data)return;renderFilters();var services=visibleServices();
   if(el.serviceGrid){el.serviceGrid.textContent='';services.forEach(function(s){el.serviceGrid.appendChild(card(s))})}
   if(el.count)el.count.textContent=services.length+' '+(services.length===1?'serviço':'serviços');
-  if(el.title)el.title.textContent=(query||category!=='all')?'Serviços que podem ajudar':'Todos os serviços';
-  if(el.sectionHelp)el.sectionHelp.textContent=(query||category!=='all')?'Veja as opções encontradas para o que você escolheu.':'Veja os serviços e preços disponíveis.';
+  if(el.title)el.title.textContent=(query||category!=='all'||(directServiceIds&&directServiceIds.length))?'Serviços que podem ajudar':'Todos os serviços';
+  if(el.sectionHelp)el.sectionHelp.textContent=(query||category!=='all'||(directServiceIds&&directServiceIds.length))?'Veja as opções encontradas para o que você escolheu.':'Veja os serviços e preços disponíveis.';
   if(services.length){show(el.servicesSection);hide(el.empty)}else{hide(el.servicesSection);show(el.empty)}
   if(el.clear)el.clear.hidden=!query;safeHashScroll();
 }
@@ -544,10 +645,81 @@ function applyMeta(){
   }
   if(el.footer&&(data.settings||{}).footer_text)el.footer.textContent=data.settings.footer_text;
   var url=generalWaUrl();
-  [el.headerWhats,el.helpWhats,el.emptyWhats,el.mobileWhats].forEach(function(node){
+  [el.headerWhats,el.helpWhats,el.emptyWhats,el.mobileWhats,el.helperWhats].forEach(function(node){
     if(!node)return;if(url){show(node);node.href=url;node.target='_blank';node.rel='noopener noreferrer'}else{hide(node)}
   });
 }
+function setLargeText(enabled){
+  document.documentElement.classList.toggle('large-text',!!enabled);
+  if(el.fontToggle)el.fontToggle.textContent=enabled?'A- Letras':'A+ Letras';
+  try{localStorage.setItem('maposPublicLargeText',enabled?'1':'0')}catch(e){}
+}
+function initFontToggle(){
+  var enabled=false;try{enabled=localStorage.getItem('maposPublicLargeText')==='1'}catch(e){}
+  setLargeText(enabled);
+  if(el.fontToggle)el.fontToggle.addEventListener('click',function(){setLargeText(!document.documentElement.classList.contains('large-text'))});
+}
+function packExists(id){return availableIntentPacks().some(function(x){return x.id===id})}
+var helperScreens={
+  home:{title:'O que mais combina com a situação?',subtitle:'Escolha a opção mais parecida. Não precisa ter certeza.',choices:[
+    {label:'Não liga ou não dá sinal',pack:'nao-liga'},
+    {label:'Liga, mas está com problema',screen:'funciona',hint:'Lento, quente, sem imagem, vírus...'},
+    {label:'Internet ou Wi-Fi',pack:'wifi'},
+    {label:'Perdi arquivos ou fotos',pack:'dados'},
+    {label:'Quero melhorar ou trocar algo',screen:'upgrade'},
+    {label:'É outro problema',screen:'outros'}
+  ]},
+  funciona:{title:'O que acontece quando você usa?',subtitle:'Escolha o sintoma que chega mais perto.',choices:[
+    {label:'Está lento ou travando',pack:'lento'},{label:'Está esquentando',pack:'quente'},{label:'Liga, mas não aparece imagem',pack:'sem-imagem'},
+    {label:'Tela azul ou reinicia',pack:'azul'},{label:'Vírus ou propagandas',pack:'virus'},{label:'Tela do notebook',pack:'tela'},
+    {label:'Bateria ruim',pack:'bateria'},{label:'Não carrega',pack:'carregador'},{label:'Teclado ou touchpad',pack:'teclado'},
+    {label:'Está sem som',pack:'som'},{label:'Câmera não funciona',pack:'camera'}
+  ]},
+  upgrade:{title:'O que você quer fazer?',subtitle:'Se não souber, escolha a opção mais parecida.',choices:[
+    {label:'Colocar SSD ou HD',pack:'ssd'},{label:'Colocar mais memória RAM',pack:'memoria'},{label:'Formatar / instalar Windows',pack:'formatar'},
+    {label:'Fazer uma limpeza',pack:'limpeza'},{label:'Trocar bateria',pack:'bateria'},{label:'Trocar tela',pack:'tela'},{label:'Fazer backup',pack:'backup'}
+  ]},
+  outros:{title:'Mais problemas que a gente pode ajudar',subtitle:'Estas opções aparecem conforme os serviços cadastrados.',choices:[]}
+};
+var helperHistory=[];
+function helperChoiceButton(choice){
+  var b=document.createElement('button');b.type='button';b.className='helper-choice';b.textContent=choice.label;
+  if(choice.hint){var small=document.createElement('small');small.textContent=choice.hint;b.appendChild(small)}
+  b.addEventListener('click',function(){
+    if(choice.pack){if(!applyPackById(choice.pack))renderHelperScreen('outros');return}
+    if(choice.ids){query='';category='all';directServiceIds=choice.ids;if(el.search)el.search.value='';render();closeHelper();var target=document.getElementById('servicos');if(target)target.scrollIntoView({behavior:'smooth',block:'start'});return}
+    if(choice.screen){helperHistory.push(currentHelperScreen);renderHelperScreen(choice.screen)}
+  });return b;
+}
+var currentHelperScreen='home';
+function renderHelperScreen(key){
+  if(!el.helperContent)return;currentHelperScreen=key;var screen=helperScreens[key]||helperScreens.home,choices=(screen.choices||[]).slice();
+  if(key==='outros'){
+    choices=allProblemShortcuts().map(function(p){return{label:p.label,ids:p.ids||[]}});
+  } else {
+    choices=choices.filter(function(c){return !c.pack||packExists(c.pack)});
+  }
+  el.helperContent.textContent='';var box=document.createElement('div');box.className='helper-question';var h=document.createElement('h3');h.textContent=screen.title;var p=document.createElement('p');p.textContent=screen.subtitle;box.appendChild(h);box.appendChild(p);
+  var grid=document.createElement('div');grid.className='helper-choices';choices.forEach(function(c){grid.appendChild(helperChoiceButton(c))});
+  if(!choices.length){var no=document.createElement('p');no.textContent='Ainda não há um serviço cadastrado para estas opções. Você pode explicar pelo WhatsApp.';box.appendChild(no)}
+  box.appendChild(grid);el.helperContent.appendChild(box);if(el.helperBack)el.helperBack.hidden=(key==='home'&&helperHistory.length===0);
+}
+function openHelper(){if(!el.helperModal)return;helperHistory=[];renderHelperScreen('home');show(el.helperModal);document.body.classList.add('helper-open');var close=el.helperModal.querySelector('.helper-close');if(close)close.focus()}
+function closeHelper(){if(!el.helperModal)return;hide(el.helperModal);document.body.classList.remove('helper-open');if(el.openHelper)el.openHelper.focus()}
+function initHelper(){
+  if(el.openHelper)el.openHelper.addEventListener('click',openHelper);
+  if(el.helperModal)el.helperModal.addEventListener('click',function(ev){if(ev.target&&ev.target.hasAttribute('data-helper-close'))closeHelper()});
+  if(el.helperBack)el.helperBack.addEventListener('click',function(){var prev=helperHistory.pop()||'home';renderHelperScreen(prev)});
+  document.addEventListener('keydown',function(ev){if(ev.key==='Escape'&&el.helperModal&&!el.helperModal.hidden)closeHelper()});
+}
+function initVoice(){
+  var Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;if(!Recognition||!el.voice)return;
+  show(el.voice);var rec=new Recognition();rec.lang='pt-BR';rec.interimResults=false;rec.maxAlternatives=1;
+  el.voice.addEventListener('click',function(){try{rec.start();el.voice.classList.add('listening');el.voice.setAttribute('aria-label','Ouvindo...')}catch(e){}});
+  rec.onresult=function(ev){var text=ev.results&&ev.results[0]&&ev.results[0][0]?ev.results[0][0].transcript:'';if(!text)return;query=text;category='all';directServiceIds=null;if(el.search)el.search.value=text;clearShortcutActive();render();var target=document.getElementById('servicos');if(target)target.scrollIntoView({behavior:'smooth',block:'start'})};
+  rec.onend=function(){el.voice.classList.remove('listening');el.voice.setAttribute('aria-label','Falar o problema')};rec.onerror=rec.onend;
+}
+
 function start(payload){
   if(!validPayload(payload))throw new Error('Dados públicos inválidos.');
   data=payload;hide(el.loading);hide(el.error);applyMeta();renderShortcuts();render();
@@ -567,10 +739,11 @@ function refreshFromJson(){
     .finally(function(){if(timer)clearTimeout(timer)});
 }
 
-if(el.search)el.search.addEventListener('input',function(){query=this.value;category='all';clearShortcutActive();render()});
-if(el.clear)el.clear.addEventListener('click',function(){query='';category='all';if(el.search){el.search.value='';el.search.focus()}clearShortcutActive();render()});
-if(el.reset)el.reset.addEventListener('click',function(){query='';category='all';if(el.search)el.search.value='';clearShortcutActive();render();if(el.search)el.search.focus()});
-if(el.shortcuts)el.shortcuts.addEventListener('click',function(ev){var button=ev.target.closest?ev.target.closest('button[data-query]'):null;if(button&&el.shortcuts.contains(button))applyShortcut(button)});
+if(el.search)el.search.addEventListener('input',function(){query=this.value;category='all';directServiceIds=null;clearShortcutActive();render()});
+if(el.clear)el.clear.addEventListener('click',function(){query='';category='all';directServiceIds=null;if(el.search){el.search.value='';el.search.focus()}clearShortcutActive();render()});
+if(el.reset)el.reset.addEventListener('click',function(){query='';category='all';directServiceIds=null;if(el.search)el.search.value='';clearShortcutActive();render();if(el.search)el.search.focus()});
+if(el.shortcuts)el.shortcuts.addEventListener('click',function(ev){var button=ev.target.closest?ev.target.closest('button[data-ids]'):null;if(button&&el.shortcuts.contains(button))applyShortcut(button)});
+initFontToggle();initHelper();initVoice();
 
 try{
   if(validPayload(cfg.embeddedData||cfg.previewData)){start(cfg.embeddedData||cfg.previewData);refreshFromJson()}
