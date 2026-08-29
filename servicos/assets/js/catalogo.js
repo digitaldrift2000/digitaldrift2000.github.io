@@ -1,8 +1,8 @@
-/* MAPOS-CATALOGO-PUBLICO v1.4.0 - busca popular automatica e configuravel */
+/* MAPOS-CATALOGO-PUBLICO v2.0 - assistente, voz e metadados simples */
 (function(){
 'use strict';
 
-var cfg=window.CATALOGO_CONFIG||{},data=null,query='',category='all';
+var cfg=window.CATALOGO_CONFIG||{},data=null,query='',category='all',directServiceIds=null;
 var el={
   loading:document.getElementById('loading-state'),error:document.getElementById('error-state'),errorDetail:document.getElementById('error-detail'),
   servicesSection:document.getElementById('services-section'),serviceGrid:document.getElementById('service-grid'),
@@ -10,7 +10,9 @@ var el={
   shortcuts:document.getElementById('problem-shortcuts'),empty:document.getElementById('empty-state'),reset:document.getElementById('reset-filters'),count:document.getElementById('result-count'),
   updated:document.getElementById('catalog-updated'),headerWhats:document.getElementById('header-whatsapp'),
   helpWhats:document.getElementById('help-whatsapp'),emptyWhats:document.getElementById('empty-whatsapp'),mobileWhats:document.getElementById('mobile-whatsapp'),footer:document.getElementById('footer-text'),
-  title:document.getElementById('services-title'),sectionHelp:document.getElementById('section-help')
+  title:document.getElementById('services-title'),sectionHelp:document.getElementById('section-help'),
+  fontToggle:document.getElementById('font-toggle'),voice:document.getElementById('voice-search'),openHelper:document.getElementById('open-helper'),
+  helperModal:document.getElementById('helper-modal'),helperContent:document.getElementById('helper-content'),helperBack:document.getElementById('helper-back'),helperWhats:document.getElementById('helper-whatsapp')
 };
 
 function hide(node){if(node)node.hidden=true}
@@ -92,18 +94,37 @@ var friendlyDescriptions={
 };
 
 /*
- * Frases extras sem mexer no codigo:
- * No campo Descricao de qualquer servico, adicione no final:
- * [busca: apaguei minhas fotos; perdi meus arquivos; quero recuperar documentos]
- * O trecho entre [busca: ...] entra na busca, mas nao aparece para o cliente.
+ * Metadados opcionais no campo Descricao (nao aparecem para o cliente):
+ * [busca: apaguei minhas fotos; perdi meus arquivos]
+ * [nome-publico: Recuperar fotos e arquivos]
+ * [atalho: Perdi arquivos ou fotos | apaguei minhas fotos; perdi meus arquivos]
  */
 function customSearchHints(service){
-  var source=(service&&service.description)||'',found=[],re=/\[(?:busca|buscar|termos?|cliente)\s*:\s*([^\]]+)\]/gi,m;
-  while((m=re.exec(source))!==null){if(m[1])found.push(m[1].replace(/[;,|]+/g,' '))}
+  var source=(service&&service.description)||'',found=[],m;
+  var searchRe=/\[(?:busca|buscar|termos?|cliente)\s*:\s*([^\]]+)\]/gi;
+  var shortcutRe=/\[(?:atalho|problema)\s*:\s*([^|\]]+)\|([^\]]+)\]/gi;
+  while((m=searchRe.exec(source))!==null){if(m[1])found.push(m[1].replace(/[;,|]+/g,' '))}
+  while((m=shortcutRe.exec(source))!==null){if(m[1])found.push(m[1]);if(m[2])found.push(m[2].replace(/[;,|]+/g,' '))}
   return found.join(' ');
 }
+function customPublicName(service){
+  var source=(service&&service.description)||'',m=/\[(?:nome-publico|nome publico|publico)\s*:\s*([^\]]+)\]/i.exec(source);
+  return m&&m[1]?m[1].replace(/^\s+|\s+$/g,''):'';
+}
+function customShortcuts(service){
+  var source=(service&&service.description)||'',out=[],re=/\[(?:atalho|problema)\s*:\s*([^|\]]+)\|([^\]]+)\]/gi,m;
+  while((m=re.exec(source))!==null){
+    var label=(m[1]||'').replace(/^\s+|\s+$/g,''),terms=(m[2]||'').replace(/^\s+|\s+$/g,'');
+    if(label&&terms)out.push({label:label,terms:terms});
+  }
+  return out;
+}
 function stripSearchHints(value){
-  return (value||'').toString().replace(/\s*\[(?:busca|buscar|termos?|cliente)\s*:\s*[^\]]+\]\s*/gi,' ').replace(/\s{2,}/g,' ').replace(/^\s+|\s+$/g,'');
+  return (value||'').toString()
+    .replace(/\s*\[(?:busca|buscar|termos?|cliente)\s*:\s*[^\]]+\]\s*/gi,' ')
+    .replace(/\s*\[(?:nome-publico|nome publico|publico)\s*:\s*[^\]]+\]\s*/gi,' ')
+    .replace(/\s*\[(?:atalho|problema)\s*:\s*[^\]]+\]\s*/gi,' ')
+    .replace(/\s{2,}/g,' ').replace(/^\s+|\s+$/g,'');
 }
 
 /*
@@ -115,6 +136,7 @@ var intentPacks=[
   {id:'nao-liga',label:'Não liga',detect:['diagnostico','placa mae','fonte','reparo'],aliases:'nao liga nao acende nao da sinal morreu apagado aperto botao nada acontece sem energia sem sinal',query:'nao liga'},
   {id:'lento',label:'Está lento ou travando',detect:['otimizacao','formatacao','windows','ssd','diagnostico'],aliases:'lento travando trava demora demorando pesado engasgando congelando lerdo nao responde fica pensando demora abrir demora ligar',query:'lento travando'},
   {id:'quente',label:'Está esquentando',detect:['limpeza','pasta termica','fan','cooler','ventoinha'],aliases:'esquentando aquecendo quente temperatura superaquecendo superaquece barulho ventilador ventoinha fan cooler',query:'esquentando'},
+  {id:'limpeza',label:'Quero fazer uma limpeza',detect:['limpeza'],aliases:'limpeza limpar poeira sujeira manutencao preventiva pasta termica higienizar higienizacao',query:'limpeza'},
   {id:'formatar',label:'Quero formatar',detect:['formatacao','inst windows','instalacao windows','windows'],aliases:'formatar formatacao reinstalar windows zerar sistema instalar windows limpar sistema comecar do zero',query:'formatar windows'},
   {id:'virus',label:'Vírus ou propaganda',detect:['virus','malware','formatacao'],aliases:'virus malware propaganda anuncio popup pop up janela abrindo sozinho pagina abrindo sozinho infectado invasao estranho navegador',query:'virus propaganda'},
   {id:'ssd',label:'Quero colocar SSD / HD',detect:['ssd','hd','clonagem','armazenamento'],aliases:'ssd hd disco armazenamento upgrade colocar ssd trocar hd sem espaco pouco espaco armazenamento cheio passar tudo copiar disco',query:'ssd hd'},
@@ -135,7 +157,7 @@ var intentPacks=[
 ];
 
 function serviceKey(service){return normalize(service&&service.name)}
-function friendlyServiceName(service){return friendlyNames[serviceKey(service)]||(service.name||'Serviço')}
+function friendlyServiceName(service){return customPublicName(service)||friendlyNames[serviceKey(service)]||(service.name||'Serviço')}
 function friendlyDescription(service){
   var key=serviceKey(service);
   return friendlyDescriptions[key]||stripSearchHints(service.description||'')||'Se tiver dúvida, chama a gente que explicamos direitinho.';
@@ -166,6 +188,7 @@ function serviceMatchesQuery(service,q){
 }
 function visibleServices(){
   return(data.services||[]).filter(function(s){
+    if(directServiceIds&&directServiceIds.length&&directServiceIds.indexOf(String(s.id))===-1)return false;
     if(category!=='all'&&String(s.category_id)!==String(category))return false;
     return serviceMatchesQuery(s,query);
   });
@@ -206,9 +229,6 @@ function card(service){
   if(service.featured){var popular=document.createElement('span');popular.className='popular-badge';popular.textContent='Mais pedido';top.appendChild(popular)}
   var friendly=friendlyServiceName(service),h=document.createElement('h3');h.textContent=friendly;
   main.appendChild(top);main.appendChild(h);
-  if(normalize(friendly)!==normalize(service.name||'')){
-    var original=document.createElement('span');original.className='service-original-name';original.textContent='Nome do serviço: '+service.name;main.appendChild(original);
-  }
   var p=document.createElement('p');p.className='service-description';p.textContent=friendlyDescription(service);main.appendChild(p);
 
   var action=document.createElement('div');action.className='service-action';action.appendChild(priceBlock(service));
@@ -220,7 +240,7 @@ function card(service){
 function filterButton(label,id){
   var active=String(category)===String(id),b=document.createElement('button');b.type='button';b.className='filter-button'+(active?' active':'');
   b.textContent=label;b.setAttribute('aria-pressed',String(active));
-  b.addEventListener('click',function(){category=id;query='';if(el.search)el.search.value='';clearShortcutActive();render()});
+  b.addEventListener('click',function(){category=id;query='';directServiceIds=null;if(el.search)el.search.value='';clearShortcutActive();render()});
   return b;
 }
 function renderFilters(){
@@ -234,21 +254,44 @@ function clearShortcutActive(){
 function availableIntentPacks(){
   var services=data&&data.services?data.services:[],available=[];
   intentPacks.forEach(function(pack){
-    var exists=services.some(function(service){return packApplies(service,pack)});
-    if(exists)available.push(pack);
+    var ids=services.filter(function(service){return packApplies(service,pack)}).map(function(service){return String(service.id)});
+    if(ids.length){var item={};Object.keys(pack).forEach(function(k){item[k]=pack[k]});item.ids=ids;available.push(item)}
   });
-  return available.slice(0,14);
+  return available;
+}
+function availableCustomShortcuts(){
+  var grouped={};
+  (data.services||[]).forEach(function(service){
+    customShortcuts(service).forEach(function(item){
+      var key=normalize(item.label);if(!key)return;
+      if(!grouped[key])grouped[key]={id:'custom-'+key.replace(/\s+/g,'-'),label:item.label,ids:[],terms:[]};
+      if(grouped[key].ids.indexOf(String(service.id))===-1)grouped[key].ids.push(String(service.id));
+      grouped[key].terms.push(item.terms);
+    });
+  });
+  return Object.keys(grouped).map(function(k){return grouped[k]});
+}
+function allProblemShortcuts(){
+  var list=availableIntentPacks().concat(availableCustomShortcuts()),seen={},out=[];
+  list.forEach(function(item){var key=normalize(item.label);if(!key||seen[key])return;seen[key]=1;out.push(item)});
+  return out;
 }
 function renderShortcuts(){
   if(!el.shortcuts)return;
   el.shortcuts.textContent='';
-  availableIntentPacks().forEach(function(pack){
-    var b=document.createElement('button');b.type='button';b.setAttribute('data-query',pack.query);b.textContent=pack.label;el.shortcuts.appendChild(b);
+  allProblemShortcuts().slice(0,16).forEach(function(pack){
+    var b=document.createElement('button');b.type='button';b.setAttribute('data-ids',(pack.ids||[]).join(','));b.setAttribute('data-label',pack.label||'');b.textContent=pack.label;el.shortcuts.appendChild(b);
   });
 }
 function applyShortcut(button){
-  if(!button)return;query=button.getAttribute('data-query')||'';category='all';if(el.search)el.search.value='';clearShortcutActive();button.classList.add('active');render();
+  if(!button)return;
+  var ids=(button.getAttribute('data-ids')||'').split(',').filter(Boolean);query='';category='all';directServiceIds=ids.length?ids:null;if(el.search)el.search.value='';clearShortcutActive();button.classList.add('active');render();
   var target=document.getElementById('servicos');if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function applyPackById(id){
+  var pack=availableIntentPacks().find(function(x){return x.id===id});if(!pack)return false;
+  query='';category='all';directServiceIds=pack.ids||null;if(el.search)el.search.value='';clearShortcutActive();render();closeHelper();
+  var target=document.getElementById('servicos');if(target)target.scrollIntoView({behavior:'smooth',block:'start'});return true;
 }
 function safeHashScroll(){
   if(!location.hash)return;
@@ -258,8 +301,8 @@ function render(){
   if(!data)return;renderFilters();var services=visibleServices();
   if(el.serviceGrid){el.serviceGrid.textContent='';services.forEach(function(s){el.serviceGrid.appendChild(card(s))})}
   if(el.count)el.count.textContent=services.length+' '+(services.length===1?'serviço':'serviços');
-  if(el.title)el.title.textContent=(query||category!=='all')?'Serviços que podem ajudar':'Todos os serviços';
-  if(el.sectionHelp)el.sectionHelp.textContent=(query||category!=='all')?'Veja as opções encontradas para o que você escolheu.':'Veja os serviços e preços disponíveis.';
+  if(el.title)el.title.textContent=(query||category!=='all'||(directServiceIds&&directServiceIds.length))?'Serviços que podem ajudar':'Todos os serviços';
+  if(el.sectionHelp)el.sectionHelp.textContent=(query||category!=='all'||(directServiceIds&&directServiceIds.length))?'Veja as opções encontradas para o que você escolheu.':'Veja os serviços e preços disponíveis.';
   if(services.length){show(el.servicesSection);hide(el.empty)}else{hide(el.servicesSection);show(el.empty)}
   if(el.clear)el.clear.hidden=!query;safeHashScroll();
 }
@@ -270,10 +313,81 @@ function applyMeta(){
   }
   if(el.footer&&(data.settings||{}).footer_text)el.footer.textContent=data.settings.footer_text;
   var url=generalWaUrl();
-  [el.headerWhats,el.helpWhats,el.emptyWhats,el.mobileWhats].forEach(function(node){
+  [el.headerWhats,el.helpWhats,el.emptyWhats,el.mobileWhats,el.helperWhats].forEach(function(node){
     if(!node)return;if(url){show(node);node.href=url;node.target='_blank';node.rel='noopener noreferrer'}else{hide(node)}
   });
 }
+function setLargeText(enabled){
+  document.documentElement.classList.toggle('large-text',!!enabled);
+  if(el.fontToggle)el.fontToggle.textContent=enabled?'A- Letras':'A+ Letras';
+  try{localStorage.setItem('maposPublicLargeText',enabled?'1':'0')}catch(e){}
+}
+function initFontToggle(){
+  var enabled=false;try{enabled=localStorage.getItem('maposPublicLargeText')==='1'}catch(e){}
+  setLargeText(enabled);
+  if(el.fontToggle)el.fontToggle.addEventListener('click',function(){setLargeText(!document.documentElement.classList.contains('large-text'))});
+}
+function packExists(id){return availableIntentPacks().some(function(x){return x.id===id})}
+var helperScreens={
+  home:{title:'O que mais combina com a situação?',subtitle:'Escolha a opção mais parecida. Não precisa ter certeza.',choices:[
+    {label:'Não liga ou não dá sinal',pack:'nao-liga'},
+    {label:'Liga, mas está com problema',screen:'funciona',hint:'Lento, quente, sem imagem, vírus...'},
+    {label:'Internet ou Wi-Fi',pack:'wifi'},
+    {label:'Perdi arquivos ou fotos',pack:'dados'},
+    {label:'Quero melhorar ou trocar algo',screen:'upgrade'},
+    {label:'É outro problema',screen:'outros'}
+  ]},
+  funciona:{title:'O que acontece quando você usa?',subtitle:'Escolha o sintoma que chega mais perto.',choices:[
+    {label:'Está lento ou travando',pack:'lento'},{label:'Está esquentando',pack:'quente'},{label:'Liga, mas não aparece imagem',pack:'sem-imagem'},
+    {label:'Tela azul ou reinicia',pack:'azul'},{label:'Vírus ou propagandas',pack:'virus'},{label:'Tela do notebook',pack:'tela'},
+    {label:'Bateria ruim',pack:'bateria'},{label:'Não carrega',pack:'carregador'},{label:'Teclado ou touchpad',pack:'teclado'},
+    {label:'Está sem som',pack:'som'},{label:'Câmera não funciona',pack:'camera'}
+  ]},
+  upgrade:{title:'O que você quer fazer?',subtitle:'Se não souber, escolha a opção mais parecida.',choices:[
+    {label:'Colocar SSD ou HD',pack:'ssd'},{label:'Colocar mais memória RAM',pack:'memoria'},{label:'Formatar / instalar Windows',pack:'formatar'},
+    {label:'Fazer uma limpeza',pack:'limpeza'},{label:'Trocar bateria',pack:'bateria'},{label:'Trocar tela',pack:'tela'},{label:'Fazer backup',pack:'backup'}
+  ]},
+  outros:{title:'Mais problemas que a gente pode ajudar',subtitle:'Estas opções aparecem conforme os serviços cadastrados.',choices:[]}
+};
+var helperHistory=[];
+function helperChoiceButton(choice){
+  var b=document.createElement('button');b.type='button';b.className='helper-choice';b.textContent=choice.label;
+  if(choice.hint){var small=document.createElement('small');small.textContent=choice.hint;b.appendChild(small)}
+  b.addEventListener('click',function(){
+    if(choice.pack){if(!applyPackById(choice.pack))renderHelperScreen('outros');return}
+    if(choice.ids){query='';category='all';directServiceIds=choice.ids;if(el.search)el.search.value='';render();closeHelper();var target=document.getElementById('servicos');if(target)target.scrollIntoView({behavior:'smooth',block:'start'});return}
+    if(choice.screen){helperHistory.push(currentHelperScreen);renderHelperScreen(choice.screen)}
+  });return b;
+}
+var currentHelperScreen='home';
+function renderHelperScreen(key){
+  if(!el.helperContent)return;currentHelperScreen=key;var screen=helperScreens[key]||helperScreens.home,choices=(screen.choices||[]).slice();
+  if(key==='outros'){
+    choices=allProblemShortcuts().map(function(p){return{label:p.label,ids:p.ids||[]}});
+  } else {
+    choices=choices.filter(function(c){return !c.pack||packExists(c.pack)});
+  }
+  el.helperContent.textContent='';var box=document.createElement('div');box.className='helper-question';var h=document.createElement('h3');h.textContent=screen.title;var p=document.createElement('p');p.textContent=screen.subtitle;box.appendChild(h);box.appendChild(p);
+  var grid=document.createElement('div');grid.className='helper-choices';choices.forEach(function(c){grid.appendChild(helperChoiceButton(c))});
+  if(!choices.length){var no=document.createElement('p');no.textContent='Ainda não há um serviço cadastrado para estas opções. Você pode explicar pelo WhatsApp.';box.appendChild(no)}
+  box.appendChild(grid);el.helperContent.appendChild(box);if(el.helperBack)el.helperBack.hidden=(key==='home'&&helperHistory.length===0);
+}
+function openHelper(){if(!el.helperModal)return;helperHistory=[];renderHelperScreen('home');show(el.helperModal);document.body.classList.add('helper-open');var close=el.helperModal.querySelector('.helper-close');if(close)close.focus()}
+function closeHelper(){if(!el.helperModal)return;hide(el.helperModal);document.body.classList.remove('helper-open');if(el.openHelper)el.openHelper.focus()}
+function initHelper(){
+  if(el.openHelper)el.openHelper.addEventListener('click',openHelper);
+  if(el.helperModal)el.helperModal.addEventListener('click',function(ev){if(ev.target&&ev.target.hasAttribute('data-helper-close'))closeHelper()});
+  if(el.helperBack)el.helperBack.addEventListener('click',function(){var prev=helperHistory.pop()||'home';renderHelperScreen(prev)});
+  document.addEventListener('keydown',function(ev){if(ev.key==='Escape'&&el.helperModal&&!el.helperModal.hidden)closeHelper()});
+}
+function initVoice(){
+  var Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;if(!Recognition||!el.voice)return;
+  show(el.voice);var rec=new Recognition();rec.lang='pt-BR';rec.interimResults=false;rec.maxAlternatives=1;
+  el.voice.addEventListener('click',function(){try{rec.start();el.voice.classList.add('listening');el.voice.setAttribute('aria-label','Ouvindo...')}catch(e){}});
+  rec.onresult=function(ev){var text=ev.results&&ev.results[0]&&ev.results[0][0]?ev.results[0][0].transcript:'';if(!text)return;query=text;category='all';directServiceIds=null;if(el.search)el.search.value=text;clearShortcutActive();render();var target=document.getElementById('servicos');if(target)target.scrollIntoView({behavior:'smooth',block:'start'})};
+  rec.onend=function(){el.voice.classList.remove('listening');el.voice.setAttribute('aria-label','Falar o problema')};rec.onerror=rec.onend;
+}
+
 function start(payload){
   if(!validPayload(payload))throw new Error('Dados públicos inválidos.');
   data=payload;hide(el.loading);hide(el.error);applyMeta();renderShortcuts();render();
@@ -293,10 +407,11 @@ function refreshFromJson(){
     .finally(function(){if(timer)clearTimeout(timer)});
 }
 
-if(el.search)el.search.addEventListener('input',function(){query=this.value;category='all';clearShortcutActive();render()});
-if(el.clear)el.clear.addEventListener('click',function(){query='';category='all';if(el.search){el.search.value='';el.search.focus()}clearShortcutActive();render()});
-if(el.reset)el.reset.addEventListener('click',function(){query='';category='all';if(el.search)el.search.value='';clearShortcutActive();render();if(el.search)el.search.focus()});
-if(el.shortcuts)el.shortcuts.addEventListener('click',function(ev){var button=ev.target.closest?ev.target.closest('button[data-query]'):null;if(button&&el.shortcuts.contains(button))applyShortcut(button)});
+if(el.search)el.search.addEventListener('input',function(){query=this.value;category='all';directServiceIds=null;clearShortcutActive();render()});
+if(el.clear)el.clear.addEventListener('click',function(){query='';category='all';directServiceIds=null;if(el.search){el.search.value='';el.search.focus()}clearShortcutActive();render()});
+if(el.reset)el.reset.addEventListener('click',function(){query='';category='all';directServiceIds=null;if(el.search)el.search.value='';clearShortcutActive();render();if(el.search)el.search.focus()});
+if(el.shortcuts)el.shortcuts.addEventListener('click',function(ev){var button=ev.target.closest?ev.target.closest('button[data-ids]'):null;if(button&&el.shortcuts.contains(button))applyShortcut(button)});
+initFontToggle();initHelper();initVoice();
 
 try{
   if(validPayload(cfg.embeddedData||cfg.previewData)){start(cfg.embeddedData||cfg.previewData);refreshFromJson()}
