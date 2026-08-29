@@ -1,4 +1,4 @@
-/* MAPOS-CATALOGO-PUBLICO v3.0 - assistente guiado, voz e ajuda persistente */
+/* MAPOS-CATALOGO-PUBLICO v4.0 - catalogo compacto mobile e fluxo simplificado */
 (function(){
 'use strict';
 
@@ -12,7 +12,9 @@ var el={
   helpWhats:document.getElementById('help-whatsapp'),emptyWhats:document.getElementById('empty-whatsapp'),mobileWhats:document.getElementById('mobile-whatsapp'),footer:document.getElementById('footer-text'),
   title:document.getElementById('services-title'),sectionHelp:document.getElementById('section-help'),
   fontToggle:document.getElementById('font-toggle'),voice:document.getElementById('voice-search'),openHelper:document.getElementById('open-helper'),
-  helperModal:document.getElementById('helper-modal'),helperContent:document.getElementById('helper-content'),helperBack:document.getElementById('helper-back'),helperWhats:document.getElementById('helper-whatsapp')
+  helperModal:document.getElementById('helper-modal'),helperContent:document.getElementById('helper-content'),helperBack:document.getElementById('helper-back'),helperWhats:document.getElementById('helper-whatsapp'),
+  heroWhats:document.getElementById('hero-whatsapp'),problemBox:document.getElementById('problem-box'),toggleProblems:document.getElementById('toggle-problems'),
+  quoteCftv:document.getElementById('quote-cftv'),quoteWifiCamera:document.getElementById('quote-wifi-camera'),quoteOther:document.getElementById('quote-other')
 };
 
 function hide(node){if(node)node.hidden=true}
@@ -205,6 +207,16 @@ function generalWaUrl(){
   var phone=whatsappBase();if(!phone)return'';
   return'https://wa.me/'+phone+'?text='+encodeURIComponent('Oi! Preciso de ajuda com meu computador/equipamento. Posso explicar o que está acontecendo?');
 }
+function quoteWaUrl(kind){
+  var phone=whatsappBase();if(!phone)return'';
+  var messages={
+    cftv:'Oi! Quero pedir um orçamento para câmeras de segurança / CFTV. Posso explicar o local e o que preciso?',
+    wifiCamera:'Oi! Quero ajuda/orçamento com câmera Wi-Fi ou IP. Posso explicar o modelo e o que preciso fazer?',
+    other:'Oi! Não encontrei exatamente o serviço que preciso no catálogo. Posso explicar para vocês e pedir um orçamento?'
+  };
+  return'https://wa.me/'+phone+'?text='+encodeURIComponent(messages[kind]||messages.other);
+}
+
 function money(value){
   try{return new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(Number(value)||0)}
   catch(e){return'R$ '+(Number(value)||0).toFixed(2).replace('.',',')}
@@ -279,13 +291,16 @@ function allProblemShortcuts(){
 function renderShortcuts(){
   if(!el.shortcuts)return;
   el.shortcuts.textContent='';
-  allProblemShortcuts().slice(0,16).forEach(function(pack){
+  var items=allProblemShortcuts().slice(0,16);
+  items.forEach(function(pack){
     var b=document.createElement('button');b.type='button';b.setAttribute('data-ids',(pack.ids||[]).join(','));b.setAttribute('data-label',pack.label||'');b.textContent=pack.label;el.shortcuts.appendChild(b);
   });
+  if(el.toggleProblems)el.toggleProblems.hidden=items.length<=6;
 }
 function applyShortcut(button){
   if(!button)return;
   var ids=(button.getAttribute('data-ids')||'').split(',').filter(Boolean);query='';category='all';directServiceIds=ids.length?ids:null;if(el.search)el.search.value='';clearShortcutActive();button.classList.add('active');render();
+  if(window.matchMedia&&window.matchMedia('(max-width:740px)').matches&&el.problemBox)el.problemBox.open=false;
   var target=document.getElementById('servicos');if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
 }
 function applyPackById(id){
@@ -301,8 +316,8 @@ function render(){
   if(!data)return;renderFilters();var services=visibleServices();
   if(el.serviceGrid){el.serviceGrid.textContent='';services.forEach(function(s){el.serviceGrid.appendChild(card(s))})}
   if(el.count)el.count.textContent=services.length+' '+(services.length===1?'serviço':'serviços');
-  if(el.title)el.title.textContent=(query||category!=='all'||(directServiceIds&&directServiceIds.length))?'Serviços que podem ajudar':'Todos os serviços';
-  if(el.sectionHelp)el.sectionHelp.textContent=(query||category!=='all'||(directServiceIds&&directServiceIds.length))?'Veja as opções encontradas para o que você escolheu.':'Veja os serviços e preços disponíveis.';
+  if(el.title)el.title.textContent=(query||category!=='all'||(directServiceIds&&directServiceIds.length))?'Serviços que podem ajudar':'Serviços e preços';
+  if(el.sectionHelp)el.sectionHelp.textContent=(query||category!=='all'||(directServiceIds&&directServiceIds.length))?'Veja as opções encontradas para o que você escolheu.':'Veja os serviços com preço publicado. Se não encontrar o que precisa, peça um orçamento mais abaixo.';
   if(services.length){show(el.servicesSection);hide(el.empty)}else{hide(el.servicesSection);show(el.empty)}
   if(el.clear)el.clear.hidden=!query;safeHashScroll();
 }
@@ -313,8 +328,11 @@ function applyMeta(){
   }
   if(el.footer&&(data.settings||{}).footer_text)el.footer.textContent=data.settings.footer_text;
   var url=generalWaUrl();
-  [el.headerWhats,el.helpWhats,el.emptyWhats,el.mobileWhats,el.helperWhats].forEach(function(node){
+  [el.headerWhats,el.heroWhats,el.helpWhats,el.emptyWhats,el.mobileWhats,el.helperWhats].forEach(function(node){
     if(!node)return;if(url){show(node);node.href=url;node.target='_blank';node.rel='noopener noreferrer'}else{hide(node)}
+  });
+  [[el.quoteCftv,'cftv'],[el.quoteWifiCamera,'wifiCamera'],[el.quoteOther,'other']].forEach(function(item){
+    var node=item[0],quoteUrl=quoteWaUrl(item[1]);if(!node)return;if(quoteUrl){show(node);node.href=quoteUrl;node.target='_blank';node.rel='noopener noreferrer'}else{hide(node)}
   });
 }
 function setLargeText(enabled){
@@ -380,6 +398,18 @@ function initHelper(){
   if(el.helperBack)el.helperBack.addEventListener('click',function(){var prev=helperHistory.pop()||'home';renderHelperScreen(prev)});
   document.addEventListener('keydown',function(ev){if(ev.key==='Escape'&&el.helperModal&&!el.helperModal.hidden)closeHelper()});
 }
+function initProblemToggle(){
+  if(!el.toggleProblems||!el.shortcuts)return;
+  function setExpanded(expanded){
+    el.shortcuts.classList.toggle('expanded',!!expanded);
+    el.toggleProblems.setAttribute('aria-expanded',expanded?'true':'false');
+    el.toggleProblems.textContent=expanded?'Ver menos problemas':'Ver mais problemas';
+  }
+  setExpanded(false);
+  el.toggleProblems.addEventListener('click',function(){setExpanded(!el.shortcuts.classList.contains('expanded'))});
+  if(el.problemBox)el.problemBox.addEventListener('toggle',function(){if(!el.problemBox.open)setExpanded(false)});
+}
+
 function initVoice(){
   var Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;if(!Recognition||!el.voice)return;
   show(el.voice);var rec=new Recognition();rec.lang='pt-BR';rec.interimResults=false;rec.maxAlternatives=1;
@@ -411,7 +441,7 @@ if(el.search)el.search.addEventListener('input',function(){query=this.value;cate
 if(el.clear)el.clear.addEventListener('click',function(){query='';category='all';directServiceIds=null;if(el.search){el.search.value='';el.search.focus()}clearShortcutActive();render()});
 if(el.reset)el.reset.addEventListener('click',function(){query='';category='all';directServiceIds=null;if(el.search)el.search.value='';clearShortcutActive();render();if(el.search)el.search.focus()});
 if(el.shortcuts)el.shortcuts.addEventListener('click',function(ev){var button=ev.target.closest?ev.target.closest('button[data-ids]'):null;if(button&&el.shortcuts.contains(button))applyShortcut(button)});
-initFontToggle();initHelper();initVoice();
+initFontToggle();initHelper();initProblemToggle();initVoice();
 
 try{
   if(validPayload(cfg.embeddedData||cfg.previewData)){start(cfg.embeddedData||cfg.previewData);refreshFromJson()}
