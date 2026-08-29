@@ -1,15 +1,15 @@
-<!-- MAPOS-PUBLICO-GUIADO v3.0 -->
+<!-- MAPOS-CARTAO-ERROR-PROOF v1.0 -->
 <!doctype html>
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
     <meta name="robots" content="noindex,nofollow,noarchive">
-    <meta name="theme-color" content="#f5f1e9">
-    <title>Meu cartão de visita — Cartão digital</title>
+    <meta name="theme-color" content="#f6f4ef">
+    <title>Meu cartão de visita — Contato</title>
 
     <meta property="og:title" content="Meu cartão de visita">
-    <meta property="og:description" content="Contato, servicos e formas de atendimento.">
+    <meta property="og:description" content="Fale conosco, veja os preços e salve nosso contato.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://digitaldrift2000.github.io/cartoes/0618e98994d5c8114a4a0f158235bed2cdef5d8a6fc33b37e194f66fc177afc4/">
 
@@ -17,180 +17,206 @@
     <link rel="stylesheet" href="../assets/cartoes-visita.css">
 
     <style>
-        /* MAPOS-PUBLICO-GUIADO v3.0 - somente a pagina publica do cartao */
-        .business-card-public .public-panel-kicker{letter-spacing:.06em}
-        .business-card-public .public-panel-intro{font-size:16px;line-height:1.6}
-        .business-card-public .public-primary-actions{gap:12px}
-        .business-card-public .public-action-whatsapp{min-height:72px;font-size:16px;box-shadow:0 12px 28px rgba(29,156,82,.18)}
-        .business-card-public .public-action-whatsapp strong{font-size:17px}
-        .business-card-public .public-action-primary,.business-card-public .public-action-site{min-height:62px}
-        .business-card-public .public-card-price-note{border-width:2px}
-        .business-card-public .public-card-price-copy strong{font-size:18px}
-        .business-card-public .public-card-price-link{min-height:48px;font-weight:900}
-        .business-card-public .public-more-actions summary{font-weight:800}
-        @media(max-width:820px){
-            .business-card-public .public-card-content{display:flex;flex-direction:column}
-            .business-card-public .public-card-actions-panel{order:1}
-            .business-card-public .public-preview-column{order:2}
-            .business-card-public .public-welcome{text-align:left}
-            .business-card-public .public-card-stage{margin-top:8px}
+        /* MAPOS-CARTAO-ERROR-PROOF v1.0 - fluxo simples e sem ambiguidade */
+        html:has(.business-card-public){background:#f6f4ef}
+        .business-card-public{
+            --ep-bg:#f6f4ef;
+            --ep-card:#fffdfa;
+            --ep-ink:#25322c;
+            --ep-muted:#66736c;
+            --ep-line:#e4e1d8;
+            --ep-green:#237a55;
+            --ep-green-dark:#196441;
+            --ep-green-soft:#edf7f1;
+            --ep-sand:#fff7e7;
+            --ep-sand-line:#ead7af;
+            min-height:100vh;
+            margin:0;
+            background:linear-gradient(180deg,#f8f7f3 0,#f3f1eb 100%);
+            color:var(--ep-ink);
+            font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+            -webkit-font-smoothing:antialiased;
         }
+        .business-card-public *{box-sizing:border-box}
+        .business-card-public [hidden]{display:none!important}
+        .ep-page{width:min(760px,100%);margin:0 auto;padding:18px 14px 94px}
+        .ep-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;padding:12px 14px;border:1px solid var(--ep-line);border-radius:18px;background:rgba(255,253,250,.96);box-shadow:0 8px 24px rgba(51,58,53,.045)}
+        .ep-brand{min-width:0;display:flex;align-items:center;gap:11px}
+        .ep-brand-icon{width:44px;height:44px;flex:0 0 auto;display:grid;place-items:center;border-radius:14px;background:var(--ep-green-soft);color:var(--ep-green);font-size:19px}
+        .ep-brand-copy{min-width:0}
+        .ep-brand-copy small{display:block;color:#8b938e;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+        .ep-brand-copy strong{display:block;margin-top:2px;overflow:hidden;color:var(--ep-ink);font-size:15px;line-height:1.25;text-overflow:ellipsis;white-space:nowrap}
+        .ep-font-button{min-height:44px;flex:0 0 auto;padding:9px 12px;border:1px solid #dce3de;border-radius:13px;background:#fff;color:#315c49;font:inherit;font-size:12px;font-weight:850;cursor:pointer}
+
+        .ep-main{padding:28px 24px;border:1px solid var(--ep-line);border-radius:26px;background:var(--ep-card);box-shadow:0 24px 70px rgba(58,62,56,.085)}
+        .ep-eyebrow{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid #d5e8dd;border-radius:999px;background:var(--ep-green-soft);color:#2d664d;font-size:10px;font-weight:900;letter-spacing:.04em;text-transform:uppercase}
+        .ep-main h1{margin:13px 0 0;color:var(--ep-ink);font-size:clamp(30px,6vw,43px);line-height:1.06;letter-spacing:-1.15px}
+        .ep-lead{max-width:590px;margin:10px 0 0;color:var(--ep-muted);font-size:16px;line-height:1.58}
+        .ep-instruction{display:flex;align-items:flex-start;gap:9px;margin:18px 0 0;padding:12px 13px;border-radius:14px;background:#f7faf8;color:#53665b;font-size:13px;line-height:1.5}
+        .ep-instruction i{margin-top:2px;color:var(--ep-green)}
+
+        .ep-actions{display:grid;gap:10px;margin-top:20px}
+        .ep-actions button,.ep-actions a{width:100%;min-height:68px;display:flex;align-items:center;gap:13px;padding:12px 14px;border:1px solid #dfe4df;border-radius:17px;background:#fff;color:var(--ep-ink);font:inherit;text-align:left;text-decoration:none;cursor:pointer;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease,background .15s ease}
+        .ep-actions button:hover,.ep-actions a:hover{transform:translateY(-1px);border-color:#cbd8d0;box-shadow:0 10px 24px rgba(50,59,53,.055)}
+        .ep-actions .ep-action-icon{width:44px;height:44px;flex:0 0 auto;display:grid;place-items:center;border-radius:13px;background:#f0f4f1;color:#53645b;font-size:20px}
+        .ep-actions .ep-action-copy{min-width:0;display:block}
+        .ep-actions strong{display:block;font-size:16px;line-height:1.2}
+        .ep-actions small{display:block;margin-top:4px;color:#7d8781;font-size:12px;line-height:1.35}
+        .ep-actions .ep-whatsapp{order:-10;min-height:78px;border-color:#1f704d;background:var(--ep-green);color:#fff;box-shadow:0 14px 30px rgba(35,122,85,.18)}
+        .ep-actions .ep-whatsapp:hover{border-color:var(--ep-green-dark);background:var(--ep-green-dark)}
+        .ep-actions .ep-whatsapp .ep-action-icon{background:rgba(255,255,255,.15);color:#fff;font-size:24px}
+        .ep-actions .ep-whatsapp strong{font-size:18px;color:#fff}
+        .ep-actions .ep-whatsapp small{color:rgba(255,255,255,.82)}
+        .ep-actions .ep-price{order:-9;border:2px solid var(--ep-sand-line);background:var(--ep-sand)}
+        .ep-actions .ep-price .ep-action-icon{background:#fffaf0;color:#8b6634}
+        .ep-actions .ep-save{order:-8;background:#fbfdfc}
+        .ep-actions .ep-site{order:-7}
+
+        .ep-help{display:flex;align-items:flex-start;gap:10px;margin:16px 0 0;padding:14px;border-radius:15px;background:#f1f7f3;color:#53665b;font-size:13px;line-height:1.5}
+        .ep-help i{width:22px;height:22px;flex:0 0 auto;display:grid;place-items:center;border-radius:999px;background:#dcefe4;color:#2b6d50;font-size:11px}
+        .ep-help strong{color:#315845}
+
+        .ep-section{margin-top:16px;border:1px solid var(--ep-line);border-radius:20px;background:var(--ep-card);overflow:hidden}
+        .ep-section>summary{list-style:none;min-height:64px;display:flex;align-items:center;gap:12px;padding:14px 16px;color:#33423a;font-size:14px;font-weight:900;cursor:pointer;user-select:none}
+        .ep-section>summary::-webkit-details-marker{display:none}
+        .ep-section>summary .ep-summary-icon{width:38px;height:38px;flex:0 0 auto;display:grid;place-items:center;border-radius:12px;background:#f2f5f3;color:#5d6b63}
+        .ep-section>summary .ep-summary-text{min-width:0;flex:1}
+        .ep-section>summary .ep-summary-text strong{display:block;font-size:14px}
+        .ep-section>summary .ep-summary-text small{display:block;margin-top:3px;color:#89918c;font-size:11px;font-weight:600}
+        .ep-section>summary .ep-chevron{color:#8f9792;transition:transform .18s ease}
+        .ep-section[open]>summary .ep-chevron{transform:rotate(180deg)}
+        .ep-section-body{padding:0 16px 17px;border-top:1px solid #eeeae2}
+
+        .ep-preview-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:14px 0 12px;padding:4px;border-radius:13px;background:#f2f3ef}
+        .ep-preview-tabs button{min-height:44px;border:0;border-radius:10px;background:transparent;color:#68736c;font:inherit;font-size:12px;font-weight:850;cursor:pointer}
+        .ep-preview-tabs button.active{background:#fff;color:#26342d;box-shadow:0 3px 10px rgba(45,53,48,.08)}
+        .ep-preview{position:relative;width:100%;max-width:620px;margin:0 auto}
+        .ep-preview .public-card-face{display:none;width:100%}
+        .ep-preview .public-card-face.active{display:block}
+        .ep-preview .cartoes-digital-card{border-radius:8px;box-shadow:0 18px 42px rgba(48,52,49,.14),0 0 0 1px rgba(35,40,37,.05)}
+        .ep-preview-note{margin:12px 0 0;color:#7b8580;font-size:11px;line-height:1.45;text-align:center}
+
+        .ep-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+        .ep-tools button,.ep-tools a{min-height:48px;display:flex;align-items:center;justify-content:flex-start;gap:9px;padding:10px 11px;border:1px solid #e0e4e0;border-radius:12px;background:#fff;color:#56635c;font:inherit;font-size:12px;font-weight:800;text-align:left;text-decoration:none;cursor:pointer}
+        .ep-tools button i,.ep-tools a i{width:22px;color:#66746c;text-align:center}
+        .ep-tools-label{grid-column:1/-1;margin:8px 0 -2px;color:#949a96;font-size:9px;font-weight:900;letter-spacing:.07em;text-transform:uppercase}
+
+        .ep-footer{padding:18px 4px 0;color:#8b928e;font-size:11px;line-height:1.5;text-align:center}
+        .ep-mobile-whatsapp{display:none}
+        html.card-large-text{font-size:116%}
+
+        @media(max-width:620px){
+            .ep-page{padding:8px 8px 86px}
+            .ep-header{margin-bottom:8px;padding:9px 10px;border-radius:15px}
+            .ep-brand-icon{width:40px;height:40px;border-radius:12px}
+            .ep-brand-copy small{font-size:8px}.ep-brand-copy strong{font-size:13px;max-width:52vw}
+            .ep-font-button{min-height:40px;padding:7px 9px;font-size:11px}
+            .ep-main{padding:22px 16px;border-radius:20px}
+            .ep-main h1{font-size:31px}
+            .ep-lead{font-size:14px}
+            .ep-instruction{font-size:12px}
+            .ep-actions button,.ep-actions a{min-height:65px;padding:10px 12px;border-radius:15px}
+            .ep-actions .ep-whatsapp{min-height:74px}
+            .ep-actions strong{font-size:15px}.ep-actions small{font-size:11px}
+            .ep-section{border-radius:17px}.ep-section>summary{min-height:60px;padding:12px 13px}
+            .ep-section-body{padding:0 12px 14px}
+            .ep-tools{grid-template-columns:1fr}
+            .ep-tools-label{grid-column:1}
+            .ep-mobile-whatsapp{position:fixed;left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom));z-index:90;min-height:56px;align-items:center;justify-content:center;gap:9px;border:1px solid #1e6d4b;border-radius:16px;background:var(--ep-green);color:#fff;font:inherit;font-size:14px;font-weight:900;box-shadow:0 14px 36px rgba(29,87,61,.25);cursor:pointer}
+            .ep-mobile-whatsapp:not([hidden]){display:flex}
+            html.card-large-text{font-size:108%}
+        }
+        @media(prefers-reduced-motion:reduce){.business-card-public *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
     </style>
-
-    <style>
-        /* MAPOS-PUBLICO-ACOLHEDOR v1.0 - somente aparencia */
-        .business-card-public{--pub-bg:#f7f6f1;--pub-surface:#fffefa;--pub-surface-2:#fbfaf6;--pub-ink:#27332d;--pub-muted:#69766f;--pub-line:#e7e4da;--pub-green:#2f7a5f;--pub-green-dark:#245f49;--pub-green-soft:#edf7f1;--pub-whatsapp:#26885f;--pub-whatsapp-dark:#20734f;--pub-sand:#fff7e8;--pub-sand-line:#ecd9b3;--pub-shadow:0 24px 70px rgba(57,62,56,.10);background:radial-gradient(circle at 7% 0,rgba(67,139,104,.11),transparent 30rem),radial-gradient(circle at 100% 100%,rgba(233,181,104,.12),transparent 32rem),var(--pub-bg)}
-        html:has(.business-card-public){background:#f7f6f1}
-        .public-card-topbar{padding-top:16px}.public-card-topbar-inner{min-height:64px;border-color:#e4e1d8;border-radius:19px;background:rgba(255,254,250,.94);box-shadow:0 10px 28px rgba(55,63,58,.05)}
-        .public-card-mark{width:42px;height:42px;border-radius:14px;background:#edf7f1;color:#2f7a5f}.public-card-identity strong{font-size:13px}.public-card-identity span{font-size:8px;color:#8a928d}
-        .public-card-hero{padding-top:38px}.public-card-content{gap:46px}.public-side-switch{padding:4px;border-radius:14px;background:#fffefa}.public-side-switch button{min-height:42px;border-radius:10px;font-size:12px}.public-card-tip{font-size:11px;color:#858e89}
-        .public-card-actions-panel{padding:32px;border:1px solid #e5e3da;border-radius:28px;background:rgba(255,254,250,.98);box-shadow:0 26px 72px rgba(57,62,56,.105)}
-        .public-panel-kicker{padding:7px 11px;font-size:8px;background:#edf7f1;border-color:#d8e9df}.public-card-actions-panel h1{font-size:clamp(29px,3vw,38px);line-height:1.08}.public-panel-intro{font-size:15px;line-height:1.65;color:#69766f}
-        .public-primary-actions{gap:11px;margin-top:24px}.public-primary-actions button{min-height:68px;padding:12px 14px;border-radius:17px}.public-primary-actions button>i{width:44px;height:44px;border-radius:14px;font-size:20px}.public-primary-actions button strong{font-size:14px}.public-primary-actions button small{font-size:11px;line-height:1.4}
-        .public-primary-actions .public-action-whatsapp{background:linear-gradient(180deg,#2b9468,#247f59);box-shadow:0 12px 28px rgba(38,136,95,.18)}
-        .public-card-price-note{grid-template-columns:46px minmax(0,1fr);gap:13px;margin-top:17px;padding:17px;border-radius:19px}.public-card-price-icon{width:46px;height:46px;border-radius:14px}.public-card-price-copy span{font-size:8px}.public-card-price-copy strong{font-size:14px}.public-card-price-copy p{font-size:11px}.public-card-price-link{min-height:42px;padding:9px 13px;border-radius:12px;font-size:11px}
-        .public-more-actions{margin-top:18px}.public-more-actions summary{min-height:48px;font-size:11px}.public-secondary-grid button,.public-download-row button,.public-download-row a{min-height:44px;border-radius:12px}.public-reassurance{font-size:10.5px;color:#7e8983}.public-card-footer{font-size:10px}
-        @media(max-width:820px){.public-card-actions-panel{order:1}.public-preview-column{order:2}}
-        @media(max-width:560px){.public-card-hero{padding:20px 8px 30px}.public-card-actions-panel{padding:24px 17px;border-radius:22px}.public-card-actions-panel h1{font-size:30px}.public-panel-intro{font-size:14px}.public-primary-actions button{min-height:66px}.public-card-price-copy strong{font-size:13px}.public-card-tip{font-size:10px}}
-    </style>
-
-
-    <style>
-        /* MAPOS-PUBLICO-GUIADO v3.0 */
-        .public-font-toggle-card{min-height:42px;padding:8px 12px;border:1px solid #e1e5df;border-radius:13px;background:#fffefa;color:#315b48;font-weight:900;cursor:pointer}.public-top-actions{display:flex;align-items:center;gap:7px}.public-choice-title{margin:20px 0 8px;color:#5d6e65;font-size:11px;font-weight:900;letter-spacing:.07em;text-transform:uppercase}.public-simple-note{margin:0 0 14px;padding:12px 14px;border-radius:14px;background:#f5faf7;border:1px solid #dfeae3;color:#52665b;font-size:12px;line-height:1.5}.public-simple-note strong{color:#2f5c47}.public-card-mobile-dock{display:none}.public-card-mobile-dock.single-action{grid-template-columns:1fr}html.card-large-text{font-size:116%}
-        @media(max-width:560px){html.card-large-text{font-size:108%}.public-card-topbar-inner{gap:7px}.public-top-actions{gap:5px}.public-font-toggle-card{min-height:40px;padding:7px 9px;font-size:11px}.public-icon-button{width:40px;height:40px}.public-choice-title{margin-top:15px}.public-primary-actions{gap:9px}.public-card-mobile-dock{display:grid;grid-template-columns:1fr 1fr;gap:7px;position:fixed;left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom));z-index:80;padding:7px;border:1px solid #dfe5df;border-radius:18px;background:rgba(255,254,250,.96);box-shadow:0 15px 38px rgba(43,59,50,.18);backdrop-filter:blur(10px)}.public-card-mobile-dock button,.public-card-mobile-dock a{display:flex;align-items:center;justify-content:center;min-height:50px;border:0;border-radius:13px;font:inherit;font-size:12px;font-weight:900;text-decoration:none;cursor:pointer}.public-card-mobile-dock [data-mobile-whatsapp]{background:#2f7a5f;color:#fff}.public-card-mobile-dock .mobile-price{background:#eef3ef;color:#315b48}.business-card-public{padding-bottom:78px}}
-    </style>
-
 </head>
 <body class="business-card-public">
-
-<main class="public-card-page">
-    <header class="public-card-topbar">
-        <div class="public-card-topbar-inner">
-            <div class="public-card-identity">
-                <span class="public-card-mark"><i class="fas fa-address-card"></i></span>
-                <div>
-                    <span>CONTATO DA EMPRESA</span>
-                    <strong>Meu cartão de visita</strong>
-                </div>
-            </div>
-
-            <div class="public-top-actions">
-                <button type="button" class="public-font-toggle-card" id="card-font-toggle">A+ Letras</button>
-                <button type="button" class="public-icon-button" data-share-link title="Compartilhar link" aria-label="Compartilhar link">
-                    <i class="fas fa-share-nodes"></i>
-                </button>
+<main class="ep-page">
+    <header class="ep-header">
+        <div class="ep-brand">
+            <span class="ep-brand-icon" aria-hidden="true"><i class="fas fa-address-card"></i></span>
+            <div class="ep-brand-copy">
+                <small>Contato oficial</small>
+                <strong>Meu cartão de visita</strong>
             </div>
         </div>
+        <button type="button" class="ep-font-button" id="card-font-toggle">Aumentar letras</button>
     </header>
 
-    <section class="public-card-hero">
-        <div class="public-card-content">
-            <div class="public-preview-column">
-                <div class="public-side-switch" role="tablist" aria-label="Lado do cartão">
-                    <button type="button" class="active" data-public-side="front" role="tab" aria-selected="true">
-                        <i class="fas fa-object-group"></i> Frente
-                    </button>
-                    <button type="button" data-public-side="back" role="tab" aria-selected="false">
-                        <i class="fas fa-object-ungroup"></i> Verso
-                    </button>
-                </div>
+    <section class="ep-main" aria-labelledby="ep-title">
+        <span class="ep-eyebrow"><i class="fas fa-hand-pointer" aria-hidden="true"></i> Escolha o que precisa</span>
+        <h1 id="ep-title">Como podemos ajudar?</h1>
+        <p class="ep-lead">Você não precisa entender de informática. Escolha uma opção abaixo e a gente cuida do resto.</p>
+        <p class="ep-instruction"><i class="fas fa-circle-info" aria-hidden="true"></i><span><strong>Está com dúvida?</strong> Procure pelo problema nos preços ou conte no WhatsApp com suas palavras.</span></p>
 
-                <div class="public-card-stage">
-                    <div class="public-card-glow"></div>
-                    <div class="public-card-face active" data-public-face="front">
-                        <div id="digital-card-front" class="cartoes-digital-card"></div>
-                    </div>
-                    <div class="public-card-face" data-public-face="back">
-                        <div id="digital-card-back" class="cartoes-digital-card"></div>
-                    </div>
-                </div>
+        <div class="ep-actions">
+            <button type="button" class="ep-whatsapp" data-contact-whatsapp hidden>
+                <span class="ep-action-icon" aria-hidden="true"><i class="fab fa-whatsapp"></i></span>
+                <span class="ep-action-copy"><strong>Falar no WhatsApp</strong><small>Conte o que está acontecendo. Não precisa saber o nome do serviço.</small></span>
+            </button>
 
-                <p class="public-card-tip">
-                    <i class="fas fa-circle-info"></i>
-                    Quer ver os dados do cartão? Toque em Frente ou Verso.
-                </p>
-            </div>
+            <a class="ep-price" href="https://digitaldrift2000.github.io/servicos" target="_blank" rel="noopener noreferrer">
+                <span class="ep-action-icon" aria-hidden="true"><i class="fas fa-tags"></i></span>
+                <span class="ep-action-copy"><strong>Ver serviços e preços</strong><small>Veja valores e procure pelo problema que você está tendo.</small></span>
+            </a>
 
-            <aside class="public-card-actions-panel">
-                <div class="public-welcome">
-                    <span class="public-panel-kicker">PRECISA DE AJUDA?</span>
-                    <h1>Meu cartão de visita</h1>
-                    <p class="public-panel-intro">
-                        O jeito mais fácil é chamar no WhatsApp e contar o que está acontecendo. Não precisa saber o nome técnico do problema.
-                    </p>
-                </div>
+            <button type="button" class="ep-save" data-save-contact>
+                <span class="ep-action-icon" aria-hidden="true"><i class="fas fa-user-plus"></i></span>
+                <span class="ep-action-copy"><strong>Salvar contato no celular</strong><small>Guarda telefone, WhatsApp e outros dados deste contato.</small></span>
+            </button>
 
-                <div class="public-choice-title">O que você quer fazer?</div>
-                <p class="public-simple-note"><strong>Não precisa saber termos técnicos.</strong> Se estiver com um problema, o caminho mais fácil é chamar e contar o que está acontecendo.</p>
-
-                <div class="public-primary-actions">
-                    <button type="button" class="public-action-whatsapp" data-contact-whatsapp hidden>
-                        <i class="fab fa-whatsapp"></i>
-                        <span><strong>Chamar no WhatsApp</strong><small>Pode escrever do seu jeito</small></span>
-                    </button>
-
-                    <button type="button" class="public-action-primary" data-save-contact>
-                        <i class="fas fa-user-plus"></i>
-                        <span><strong>Salvar contato no celular</strong><small>Para achar fácil quando precisar</small></span>
-                    </button>
-
-                    <button type="button" class="public-action-site" data-open-site hidden>
-                        <i class="fas fa-globe"></i>
-                        <span><strong>Abrir o site</strong><small>Veja mais informações da empresa</small></span>
-                    </button>
-                </div>
-
-                <div class="public-card-price-note">
-                    <span class="public-card-price-icon" aria-hidden="true"><i class="fas fa-tags"></i></span>
-                    <div class="public-card-price-copy">
-                        <span>PREÇOS</span>
-                        <strong>Quer saber quanto custa?</strong>
-                        <p>Veja os serviços e preços de um jeito simples. Se não achar o seu problema, é só chamar no WhatsApp.</p>
-                    </div>
-                    <a class="public-card-price-link" href="https://digitaldrift2000.github.io/servicos" target="_blank" rel="noopener noreferrer">
-                        Ver preços <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                    </a>
-                </div>
-
-                <details class="public-more-actions">
-                    <summary>
-                        <i class="fas fa-share-nodes" aria-hidden="true"></i>
-                        Mais opções
-                        <span><i class="fas fa-chevron-down" aria-hidden="true"></i></span>
-                    </summary>
-                    <div class="public-more-actions-body">
-                        <div class="public-action-divider"><span>COMPARTILHAR</span></div>
-                        <div class="public-secondary-grid">
-                            <button type="button" data-share-link><i class="fas fa-share"></i><span>Compartilhar link</span></button>
-                            <button type="button" data-copy-public-link><i class="fas fa-copy"></i><span>Copiar link</span></button>
-                            <button type="button" data-native-share="both"><i class="fas fa-image"></i><span>Frente + verso</span></button>
-                            <button type="button" data-share-pdf="cartao.pdf"><i class="fas fa-file-pdf"></i><span>Compartilhar PDF</span></button>
-                        </div>
-
-                        <div class="public-action-divider"><span>BAIXAR</span></div>
-                        <div class="public-download-row">
-                            <button type="button" data-download-png="front"><i class="fas fa-download"></i> PNG frente</button>
-                            <button type="button" data-download-png="back"><i class="fas fa-download"></i> PNG verso</button>
-                            <a target="_blank" href="cartao.pdf"><i class="fas fa-file-pdf"></i> PDF</a>
-                        </div>
-                    </div>
-                </details>
-
-                <p class="public-reassurance"><i class="fas fa-heart" aria-hidden="true"></i><span>Não sabe explicar o problema? Sem problema. Chama e conta com suas palavras.</span></p>
-            </aside>
         </div>
+
+        <div class="ep-help"><i class="fas fa-check" aria-hidden="true"></i><span><strong>Não tem como escolher “errado”.</strong> Se não souber qual serviço é, chame no WhatsApp. A gente identifica com você.</span></div>
     </section>
 
-    <nav class="public-card-mobile-dock" aria-label="Ações rápidas">
-        <button type="button" data-mobile-whatsapp hidden>Chamar no WhatsApp</button>
-        <a class="mobile-price" href="https://digitaldrift2000.github.io/servicos" target="_blank" rel="noopener noreferrer">Ver preços</a>
-    </nav>
+    <details class="ep-section">
+        <summary>
+            <span class="ep-summary-icon" aria-hidden="true"><i class="fas fa-address-card"></i></span>
+            <span class="ep-summary-text"><strong>Ver o cartão digital</strong><small>Abra só se quiser conferir frente e verso.</small></span>
+            <i class="fas fa-chevron-down ep-chevron" aria-hidden="true"></i>
+        </summary>
+        <div class="ep-section-body">
+            <div class="ep-preview-tabs" role="tablist" aria-label="Lado do cartão">
+                <button type="button" class="active" data-public-side="front" role="tab" aria-selected="true">Mostrar frente</button>
+                <button type="button" data-public-side="back" role="tab" aria-selected="false">Mostrar verso</button>
+            </div>
+            <div class="ep-preview">
+                <div class="public-card-face active" data-public-face="front"><div id="digital-card-front" class="cartoes-digital-card"></div></div>
+                <div class="public-card-face" data-public-face="back"><div id="digital-card-back" class="cartoes-digital-card"></div></div>
+            </div>
+            <p class="ep-preview-note">Essas imagens são apenas a frente e o verso do cartão. Os botões de atendimento ficam no começo da página.</p>
+        </div>
+    </details>
 
-    <footer class="public-card-footer">
-        <span><i class="fas fa-heart"></i> Quando precisar, é só voltar aqui.</span>
-    </footer>
+    <details class="ep-section">
+        <summary>
+            <span class="ep-summary-icon" aria-hidden="true"><i class="fas fa-share-nodes"></i></span>
+            <span class="ep-summary-text"><strong>Compartilhar ou baixar</strong><small>Opções extras. Você pode ignorar esta parte se não precisar.</small></span>
+            <i class="fas fa-chevron-down ep-chevron" aria-hidden="true"></i>
+        </summary>
+        <div class="ep-section-body">
+            <div class="ep-tools">
+                <div class="ep-tools-label">Outras formas de contato</div>
+                <button type="button" data-open-site hidden><i class="fas fa-globe"></i><span>Abrir o site da empresa</span></button>
+
+                <div class="ep-tools-label">Compartilhar</div>
+                <button type="button" data-share-link><i class="fas fa-share"></i><span>Compartilhar este contato</span></button>
+                <button type="button" data-copy-public-link><i class="fas fa-copy"></i><span>Copiar link</span></button>
+                <button type="button" data-native-share="both"><i class="fas fa-images"></i><span>Compartilhar frente e verso</span></button>
+                <button type="button" data-share-pdf="cartao.pdf"><i class="fas fa-file-pdf"></i><span>Compartilhar em PDF</span></button>
+
+                <div class="ep-tools-label">Baixar arquivo</div>
+                <button type="button" data-download-png="front"><i class="fas fa-download"></i><span>Baixar imagem da frente</span></button>
+                <button type="button" data-download-png="back"><i class="fas fa-download"></i><span>Baixar imagem do verso</span></button>
+                <a target="_blank" rel="noopener noreferrer" href="cartao.pdf"><i class="fas fa-file-pdf"></i><span>Abrir PDF do cartão</span></a>
+            </div>
+        </div>
+    </details>
+
+    <footer class="ep-footer">Quando precisar, volte a este link ou salve o contato no celular.</footer>
 </main>
+
+<button type="button" class="ep-mobile-whatsapp" data-mobile-whatsapp hidden><i class="fab fa-whatsapp" aria-hidden="true"></i> Falar no WhatsApp</button>
 
 <script src="../assets/mapos-qrcode.js"></script>
 <script src="../assets/cartoes-visita.js"></script>
@@ -200,30 +226,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
     var sideButtons = document.querySelectorAll('[data-public-side]');
     var faces = document.querySelectorAll('[data-public-face]');
-
-    var fontButton = document.getElementById('card-font-toggle');
-    function setLargeText(on){
-        document.documentElement.classList.toggle('card-large-text', !!on);
-        if(fontButton) fontButton.textContent = on ? 'A- Letras' : 'A+ Letras';
-        try{ localStorage.setItem('maposPublicLargeText', on ? '1' : '0'); }catch(e){}
-    }
-    var large=false; try{ large=localStorage.getItem('maposPublicLargeText')==='1'; }catch(e){} setLargeText(large);
-    if(fontButton) fontButton.addEventListener('click', function(){ setLargeText(!document.documentElement.classList.contains('card-large-text')); });
-
-    var mainWhats = document.querySelector('[data-contact-whatsapp]');
-    var mobileWhats = document.querySelector('[data-mobile-whatsapp]');
-    if(mainWhats && mobileWhats){
-        var mobileDock = mobileWhats.closest('.public-card-mobile-dock');
-        var syncWhats = function(){
-            mobileWhats.hidden = !!mainWhats.hidden;
-            if(!mainWhats.hidden) mobileWhats.onclick=function(){ mainWhats.click(); };
-            if(mobileDock) mobileDock.classList.toggle('single-action', !!mainWhats.hidden);
-        };
-        syncWhats();
-        if(window.MutationObserver){ new MutationObserver(syncWhats).observe(mainWhats,{attributes:true,attributeFilter:['hidden']}); }
-        window.setTimeout(syncWhats, 250);
-    }
-
     sideButtons.forEach(function(button){
         button.addEventListener('click', function(){
             var side = button.getAttribute('data-public-side');
@@ -237,6 +239,29 @@ document.addEventListener('DOMContentLoaded', function(){
             });
         });
     });
+
+    var fontButton = document.getElementById('card-font-toggle');
+    function setLargeText(on){
+        document.documentElement.classList.toggle('card-large-text', !!on);
+        if(fontButton) fontButton.textContent = on ? 'Tamanho normal' : 'Aumentar letras';
+        try{ localStorage.setItem('maposPublicLargeText', on ? '1' : '0'); }catch(e){}
+    }
+    var large = false;
+    try{ large = localStorage.getItem('maposPublicLargeText') === '1'; }catch(e){}
+    setLargeText(large);
+    if(fontButton) fontButton.addEventListener('click', function(){ setLargeText(!document.documentElement.classList.contains('card-large-text')); });
+
+    var mainWhats = document.querySelector('[data-contact-whatsapp]');
+    var mobileWhats = document.querySelector('[data-mobile-whatsapp]');
+    if(mainWhats && mobileWhats){
+        var syncWhats = function(){
+            mobileWhats.hidden = !!mainWhats.hidden;
+            if(!mainWhats.hidden) mobileWhats.onclick = function(){ mainWhats.click(); };
+        };
+        syncWhats();
+        if(window.MutationObserver){ new MutationObserver(syncWhats).observe(mainWhats,{attributes:true,attributeFilter:['hidden']}); }
+        window.setTimeout(syncWhats,250);
+    }
 });
 </script>
 </body>
