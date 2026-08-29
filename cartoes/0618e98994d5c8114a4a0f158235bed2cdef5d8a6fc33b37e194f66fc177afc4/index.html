@@ -1,3 +1,4 @@
+<!-- MAPOS-PUBLICO-INTUITIVO v1.0 -->
 <!doctype html>
 <html lang="pt-BR">
 <head>
@@ -14,6 +15,45 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/cartoes-visita.css">
+
+    <style>
+        /* MAPOS-PUBLICO-INTUITIVO v1.0 - somente a pagina publica do cartao */
+        .business-card-public .public-panel-kicker{letter-spacing:.06em}
+        .business-card-public .public-panel-intro{font-size:16px;line-height:1.6}
+        .business-card-public .public-primary-actions{gap:12px}
+        .business-card-public .public-action-whatsapp{min-height:72px;font-size:16px;box-shadow:0 12px 28px rgba(29,156,82,.18)}
+        .business-card-public .public-action-whatsapp strong{font-size:17px}
+        .business-card-public .public-action-primary,.business-card-public .public-action-site{min-height:62px}
+        .business-card-public .public-card-price-note{border-width:2px}
+        .business-card-public .public-card-price-copy strong{font-size:18px}
+        .business-card-public .public-card-price-link{min-height:48px;font-weight:900}
+        .business-card-public .public-more-actions summary{font-weight:800}
+        @media(max-width:820px){
+            .business-card-public .public-card-content{display:flex;flex-direction:column}
+            .business-card-public .public-card-actions-panel{order:1}
+            .business-card-public .public-preview-column{order:2}
+            .business-card-public .public-welcome{text-align:left}
+            .business-card-public .public-card-stage{margin-top:8px}
+        }
+    </style>
+
+    <style>
+        /* MAPOS-PUBLICO-ACOLHEDOR v1.0 - somente aparencia */
+        .business-card-public{--pub-bg:#f7f6f1;--pub-surface:#fffefa;--pub-surface-2:#fbfaf6;--pub-ink:#27332d;--pub-muted:#69766f;--pub-line:#e7e4da;--pub-green:#2f7a5f;--pub-green-dark:#245f49;--pub-green-soft:#edf7f1;--pub-whatsapp:#26885f;--pub-whatsapp-dark:#20734f;--pub-sand:#fff7e8;--pub-sand-line:#ecd9b3;--pub-shadow:0 24px 70px rgba(57,62,56,.10);background:radial-gradient(circle at 7% 0,rgba(67,139,104,.11),transparent 30rem),radial-gradient(circle at 100% 100%,rgba(233,181,104,.12),transparent 32rem),var(--pub-bg)}
+        html:has(.business-card-public){background:#f7f6f1}
+        .public-card-topbar{padding-top:16px}.public-card-topbar-inner{min-height:64px;border-color:#e4e1d8;border-radius:19px;background:rgba(255,254,250,.94);box-shadow:0 10px 28px rgba(55,63,58,.05)}
+        .public-card-mark{width:42px;height:42px;border-radius:14px;background:#edf7f1;color:#2f7a5f}.public-card-identity strong{font-size:13px}.public-card-identity span{font-size:8px;color:#8a928d}
+        .public-card-hero{padding-top:38px}.public-card-content{gap:46px}.public-side-switch{padding:4px;border-radius:14px;background:#fffefa}.public-side-switch button{min-height:42px;border-radius:10px;font-size:12px}.public-card-tip{font-size:11px;color:#858e89}
+        .public-card-actions-panel{padding:32px;border:1px solid #e5e3da;border-radius:28px;background:rgba(255,254,250,.98);box-shadow:0 26px 72px rgba(57,62,56,.105)}
+        .public-panel-kicker{padding:7px 11px;font-size:8px;background:#edf7f1;border-color:#d8e9df}.public-card-actions-panel h1{font-size:clamp(29px,3vw,38px);line-height:1.08}.public-panel-intro{font-size:15px;line-height:1.65;color:#69766f}
+        .public-primary-actions{gap:11px;margin-top:24px}.public-primary-actions button{min-height:68px;padding:12px 14px;border-radius:17px}.public-primary-actions button>i{width:44px;height:44px;border-radius:14px;font-size:20px}.public-primary-actions button strong{font-size:14px}.public-primary-actions button small{font-size:11px;line-height:1.4}
+        .public-primary-actions .public-action-whatsapp{background:linear-gradient(180deg,#2b9468,#247f59);box-shadow:0 12px 28px rgba(38,136,95,.18)}
+        .public-card-price-note{grid-template-columns:46px minmax(0,1fr);gap:13px;margin-top:17px;padding:17px;border-radius:19px}.public-card-price-icon{width:46px;height:46px;border-radius:14px}.public-card-price-copy span{font-size:8px}.public-card-price-copy strong{font-size:14px}.public-card-price-copy p{font-size:11px}.public-card-price-link{min-height:42px;padding:9px 13px;border-radius:12px;font-size:11px}
+        .public-more-actions{margin-top:18px}.public-more-actions summary{min-height:48px;font-size:11px}.public-secondary-grid button,.public-download-row button,.public-download-row a{min-height:44px;border-radius:12px}.public-reassurance{font-size:10.5px;color:#7e8983}.public-card-footer{font-size:10px}
+        @media(max-width:820px){.public-card-actions-panel{order:1}.public-preview-column{order:2}}
+        @media(max-width:560px){.public-card-hero{padding:20px 8px 30px}.public-card-actions-panel{padding:24px 17px;border-radius:22px}.public-card-actions-panel h1{font-size:30px}.public-panel-intro{font-size:14px}.public-primary-actions button{min-height:66px}.public-card-price-copy strong{font-size:13px}.public-card-tip{font-size:10px}}
+    </style>
+
 </head>
 <body class="business-card-public">
 
@@ -23,7 +63,7 @@
             <div class="public-card-identity">
                 <span class="public-card-mark"><i class="fas fa-address-card"></i></span>
                 <div>
-                    <span>CONTATO DIGITAL</span>
+                    <span>CONTATO DA EMPRESA</span>
                     <strong>Meu cartão de visita</strong>
                 </div>
             </div>
@@ -58,52 +98,52 @@
 
                 <p class="public-card-tip">
                     <i class="fas fa-circle-info"></i>
-                    Toque em Frente ou Verso para ver o cartão completo.
+                    Quer ver os dados do cartão? Toque em Frente ou Verso.
                 </p>
             </div>
 
             <aside class="public-card-actions-panel">
                 <div class="public-welcome">
-                    <span class="public-panel-kicker">QUE BOM TER VOCÊ POR AQUI</span>
+                    <span class="public-panel-kicker">PRECISA DE AJUDA?</span>
                     <h1>Meu cartão de visita</h1>
                     <p class="public-panel-intro">
-                        Salve este contato para quando precisar. Se quiser falar agora, conte pelo WhatsApp o que está acontecendo ou o que você gostaria de fazer.
+                        O jeito mais fácil é chamar no WhatsApp e contar o que está acontecendo. Não precisa saber o nome técnico do problema.
                     </p>
                 </div>
 
                 <div class="public-primary-actions">
                     <button type="button" class="public-action-whatsapp" data-contact-whatsapp hidden>
                         <i class="fab fa-whatsapp"></i>
-                        <span><strong>Falar no WhatsApp</strong><small>Explique o que você precisa</small></span>
+                        <span><strong>Chamar no WhatsApp</strong><small>Pode escrever do seu jeito</small></span>
                     </button>
 
                     <button type="button" class="public-action-primary" data-save-contact>
                         <i class="fas fa-user-plus"></i>
-                        <span><strong>Salvar este contato</strong><small>Deixe na agenda para quando precisar</small></span>
+                        <span><strong>Salvar contato no celular</strong><small>Para achar fácil quando precisar</small></span>
                     </button>
 
                     <button type="button" class="public-action-site" data-open-site hidden>
                         <i class="fas fa-globe"></i>
-                        <span><strong>Conhecer o site</strong><small>Veja mais sobre serviços e atendimento</small></span>
+                        <span><strong>Abrir o site</strong><small>Veja mais informações da empresa</small></span>
                     </button>
                 </div>
 
                 <div class="public-card-price-note">
                     <span class="public-card-price-icon" aria-hidden="true"><i class="fas fa-tags"></i></span>
                     <div class="public-card-price-copy">
-                        <span>SERVIÇOS E VALORES</span>
-                        <strong>Quer ter uma ideia de quanto custa?</strong>
-                        <p>Veja os serviços mais pedidos e os preços. Se o seu caso não estiver na lista, chama no WhatsApp — fazemos outros atendimentos também.</p>
+                        <span>PREÇOS</span>
+                        <strong>Quer saber quanto custa?</strong>
+                        <p>Veja os serviços e preços de um jeito simples. Se não achar o seu problema, é só chamar no WhatsApp.</p>
                     </div>
                     <a class="public-card-price-link" href="https://digitaldrift2000.github.io/servicos" target="_blank" rel="noopener noreferrer">
-                        Ver serviços e preços <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                        Ver preços <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
                     </a>
                 </div>
 
                 <details class="public-more-actions">
                     <summary>
                         <i class="fas fa-share-nodes" aria-hidden="true"></i>
-                        Compartilhar ou baixar cartão
+                        Mais opções
                         <span><i class="fas fa-chevron-down" aria-hidden="true"></i></span>
                     </summary>
                     <div class="public-more-actions-body">
@@ -124,13 +164,13 @@
                     </div>
                 </details>
 
-                <p class="public-reassurance"><i class="fas fa-heart" aria-hidden="true"></i><span>Quando precisar, este contato fica por aqui. Pode chamar sem precisar saber o nome técnico do problema.</span></p>
+                <p class="public-reassurance"><i class="fas fa-heart" aria-hidden="true"></i><span>Não sabe explicar o problema? Sem problema. Chama e conta com suas palavras.</span></p>
             </aside>
         </div>
     </section>
 
     <footer class="public-card-footer">
-        <span><i class="fas fa-heart"></i> Salve o contato e volte quando precisar.</span>
+        <span><i class="fas fa-heart"></i> Quando precisar, é só voltar aqui.</span>
     </footer>
 </main>
 
