@@ -1,4 +1,4 @@
-<!-- MAPOS-PUBLICO-INTUITIVO v1.0 -->
+<!-- MAPOS-PUBLICO-GUIADO v3.0 -->
 <!doctype html>
 <html lang="pt-BR">
 <head>
@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="../assets/cartoes-visita.css">
 
     <style>
-        /* MAPOS-PUBLICO-INTUITIVO v1.0 - somente a pagina publica do cartao */
+        /* MAPOS-PUBLICO-GUIADO v3.0 - somente a pagina publica do cartao */
         .business-card-public .public-panel-kicker{letter-spacing:.06em}
         .business-card-public .public-panel-intro{font-size:16px;line-height:1.6}
         .business-card-public .public-primary-actions{gap:12px}
@@ -54,6 +54,13 @@
         @media(max-width:560px){.public-card-hero{padding:20px 8px 30px}.public-card-actions-panel{padding:24px 17px;border-radius:22px}.public-card-actions-panel h1{font-size:30px}.public-panel-intro{font-size:14px}.public-primary-actions button{min-height:66px}.public-card-price-copy strong{font-size:13px}.public-card-tip{font-size:10px}}
     </style>
 
+
+    <style>
+        /* MAPOS-PUBLICO-GUIADO v3.0 */
+        .public-font-toggle-card{min-height:42px;padding:8px 12px;border:1px solid #e1e5df;border-radius:13px;background:#fffefa;color:#315b48;font-weight:900;cursor:pointer}.public-top-actions{display:flex;align-items:center;gap:7px}.public-choice-title{margin:20px 0 8px;color:#5d6e65;font-size:11px;font-weight:900;letter-spacing:.07em;text-transform:uppercase}.public-simple-note{margin:0 0 14px;padding:12px 14px;border-radius:14px;background:#f5faf7;border:1px solid #dfeae3;color:#52665b;font-size:12px;line-height:1.5}.public-simple-note strong{color:#2f5c47}.public-card-mobile-dock{display:none}.public-card-mobile-dock.single-action{grid-template-columns:1fr}html.card-large-text{font-size:116%}
+        @media(max-width:560px){html.card-large-text{font-size:108%}.public-card-topbar-inner{gap:7px}.public-top-actions{gap:5px}.public-font-toggle-card{min-height:40px;padding:7px 9px;font-size:11px}.public-icon-button{width:40px;height:40px}.public-choice-title{margin-top:15px}.public-primary-actions{gap:9px}.public-card-mobile-dock{display:grid;grid-template-columns:1fr 1fr;gap:7px;position:fixed;left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom));z-index:80;padding:7px;border:1px solid #dfe5df;border-radius:18px;background:rgba(255,254,250,.96);box-shadow:0 15px 38px rgba(43,59,50,.18);backdrop-filter:blur(10px)}.public-card-mobile-dock button,.public-card-mobile-dock a{display:flex;align-items:center;justify-content:center;min-height:50px;border:0;border-radius:13px;font:inherit;font-size:12px;font-weight:900;text-decoration:none;cursor:pointer}.public-card-mobile-dock [data-mobile-whatsapp]{background:#2f7a5f;color:#fff}.public-card-mobile-dock .mobile-price{background:#eef3ef;color:#315b48}.business-card-public{padding-bottom:78px}}
+    </style>
+
 </head>
 <body class="business-card-public">
 
@@ -68,9 +75,12 @@
                 </div>
             </div>
 
-            <button type="button" class="public-icon-button" data-share-link title="Compartilhar link" aria-label="Compartilhar link">
-                <i class="fas fa-share-nodes"></i>
-            </button>
+            <div class="public-top-actions">
+                <button type="button" class="public-font-toggle-card" id="card-font-toggle">A+ Letras</button>
+                <button type="button" class="public-icon-button" data-share-link title="Compartilhar link" aria-label="Compartilhar link">
+                    <i class="fas fa-share-nodes"></i>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -110,6 +120,9 @@
                         O jeito mais fácil é chamar no WhatsApp e contar o que está acontecendo. Não precisa saber o nome técnico do problema.
                     </p>
                 </div>
+
+                <div class="public-choice-title">O que você quer fazer?</div>
+                <p class="public-simple-note"><strong>Não precisa saber termos técnicos.</strong> Se estiver com um problema, o caminho mais fácil é chamar e contar o que está acontecendo.</p>
 
                 <div class="public-primary-actions">
                     <button type="button" class="public-action-whatsapp" data-contact-whatsapp hidden>
@@ -169,6 +182,11 @@
         </div>
     </section>
 
+    <nav class="public-card-mobile-dock" aria-label="Ações rápidas">
+        <button type="button" data-mobile-whatsapp hidden>Chamar no WhatsApp</button>
+        <a class="mobile-price" href="https://digitaldrift2000.github.io/servicos" target="_blank" rel="noopener noreferrer">Ver preços</a>
+    </nav>
+
     <footer class="public-card-footer">
         <span><i class="fas fa-heart"></i> Quando precisar, é só voltar aqui.</span>
     </footer>
@@ -182,6 +200,29 @@ document.addEventListener('DOMContentLoaded', function(){
 
     var sideButtons = document.querySelectorAll('[data-public-side]');
     var faces = document.querySelectorAll('[data-public-face]');
+
+    var fontButton = document.getElementById('card-font-toggle');
+    function setLargeText(on){
+        document.documentElement.classList.toggle('card-large-text', !!on);
+        if(fontButton) fontButton.textContent = on ? 'A- Letras' : 'A+ Letras';
+        try{ localStorage.setItem('maposPublicLargeText', on ? '1' : '0'); }catch(e){}
+    }
+    var large=false; try{ large=localStorage.getItem('maposPublicLargeText')==='1'; }catch(e){} setLargeText(large);
+    if(fontButton) fontButton.addEventListener('click', function(){ setLargeText(!document.documentElement.classList.contains('card-large-text')); });
+
+    var mainWhats = document.querySelector('[data-contact-whatsapp]');
+    var mobileWhats = document.querySelector('[data-mobile-whatsapp]');
+    if(mainWhats && mobileWhats){
+        var mobileDock = mobileWhats.closest('.public-card-mobile-dock');
+        var syncWhats = function(){
+            mobileWhats.hidden = !!mainWhats.hidden;
+            if(!mainWhats.hidden) mobileWhats.onclick=function(){ mainWhats.click(); };
+            if(mobileDock) mobileDock.classList.toggle('single-action', !!mainWhats.hidden);
+        };
+        syncWhats();
+        if(window.MutationObserver){ new MutationObserver(syncWhats).observe(mainWhats,{attributes:true,attributeFilter:['hidden']}); }
+        window.setTimeout(syncWhats, 250);
+    }
 
     sideButtons.forEach(function(button){
         button.addEventListener('click', function(){
