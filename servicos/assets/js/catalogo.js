@@ -1,4 +1,4 @@
-/* MAPOS-CATALOGO-PUBLICO v2.0 - assistente, voz e metadados simples */
+/* MAPOS-CATALOGO-PUBLICO v3.0 - assistente guiado, voz e ajuda persistente */
 (function(){
 'use strict';
 
@@ -375,7 +375,7 @@ function renderHelperScreen(key){
 function openHelper(){if(!el.helperModal)return;helperHistory=[];renderHelperScreen('home');show(el.helperModal);document.body.classList.add('helper-open');var close=el.helperModal.querySelector('.helper-close');if(close)close.focus()}
 function closeHelper(){if(!el.helperModal)return;hide(el.helperModal);document.body.classList.remove('helper-open');if(el.openHelper)el.openHelper.focus()}
 function initHelper(){
-  if(el.openHelper)el.openHelper.addEventListener('click',openHelper);
+  document.querySelectorAll('#open-helper,[data-open-helper]').forEach(function(button){button.addEventListener('click',openHelper)});
   if(el.helperModal)el.helperModal.addEventListener('click',function(ev){if(ev.target&&ev.target.hasAttribute('data-helper-close'))closeHelper()});
   if(el.helperBack)el.helperBack.addEventListener('click',function(){var prev=helperHistory.pop()||'home';renderHelperScreen(prev)});
   document.addEventListener('keydown',function(ev){if(ev.key==='Escape'&&el.helperModal&&!el.helperModal.hidden)closeHelper()});
