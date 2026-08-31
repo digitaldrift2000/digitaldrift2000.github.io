@@ -1,6 +1,6 @@
 {
-    "version": "2026.08.29.01",
-    "updated_at": "2026-08-29T16:41:54-03:00",
+    "version": "2026.08.31.01",
+    "updated_at": "2026-08-31T17:13:50-03:00",
     "settings": {
         "company_name": "Digital Drift",
         "whatsapp": "5533984024108",
@@ -68,9 +68,9 @@
             "id": 6,
             "name": "Rem. vírus",
             "description": "Remoção de Vírus do distema.",
-            "price": 120,
+            "price": 90,
             "price_type": "fixo",
-            "price_label": "R$ 120,00",
+            "price_label": "R$ 90,00",
             "category_id": 1,
             "featured": false,
             "order": 30
